@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello</title>
+</head>
+<body>
+ <h1>Welcome , Galina !</h1>
+ <!-- Создаем кнопку с атрибутом onclick -->
+ <button onclick="redirectToURL()">my profile</button>
+
+ <script>
+     // Функция, которая будет вызываться при нажатии на кнопку
+     function redirectToURL() {
+         // Указываем URL, на который нужно перейти
+         var targetURL = "http://localhost:8080/hello-world/my-profile";
+
+         // Используем объект window.location для перенаправления на указанный URL
+         window.location.href = targetURL;
+     }
+ </script>
+
+</body>
+</html>
