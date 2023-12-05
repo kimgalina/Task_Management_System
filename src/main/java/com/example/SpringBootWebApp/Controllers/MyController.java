@@ -1,16 +1,23 @@
 package com.example.SpringBootWebApp.Controllers;
+import com.example.SpringBootWebApp.Models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MyController {
-    @GetMapping("/hello-world")
+    @GetMapping()
     public String sayHello() {
-        return "hello_world";
+        return "Registration";
     }
-    @GetMapping("/hello-world/my-profile")
+    @GetMapping("/dashboard")
     public String getMyProfile() {
-        return "myProfile.html";
+        return "Dashboard";
+    }
+    @PostMapping()
+    public String create(@ModelAttribute("newUser") User user) {
+        return "redirect:/users";
     }
 
 
