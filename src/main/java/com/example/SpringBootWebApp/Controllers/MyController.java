@@ -8,16 +8,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class MyController {
     @GetMapping()
-    public String sayHello() {
+    public String registerNewUser() {
+
         return "Registration";
     }
     @GetMapping("/dashboard")
     public String getMyProfile() {
+
         return "Dashboard";
     }
-    @PostMapping()
+    @GetMapping("/registration-success")
+    public String showCongratulations() {
+        return "Congratulations";
+    }
+
+    @PostMapping("/")
     public String create(@ModelAttribute("newUser") User user) {
-        return "redirect:/users";
+        boolean isRegistrationSuccess = true; // logic of creating user in db
+        if(isRegistrationSuccess) {
+            return "redirect:/registration-success";
+        }
+        return "redirect:/";
     }
 
 
