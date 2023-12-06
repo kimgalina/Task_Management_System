@@ -17,11 +17,6 @@
             height: 100vh;
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
         form {
             background-color: #fff;
             border-radius: 8px;
@@ -62,21 +57,19 @@
             background-color: #45a049;
         }
     </style>
-    <title>Registration</title>
+    <title>Sign in</title>
 </head>
 
 <body>
-    <h1>Welcome to Task Manager</h1>
-    <form th:method="POST" th:action="@{/}" th:object="${newUser}">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+<form >
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
-        <input type="submit" value="Register">
-        <input type="button" value="Sign In" onclick="window.location.href='/sign-in'">
-    </form>
+    <input type="submit" value="Sign In">
+</form>
 </body>
 
 </html>

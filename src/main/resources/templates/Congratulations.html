@@ -45,7 +45,7 @@
     <div id="notification">
         <div id="congratulations">Congratulations! 🎉</div>
         <div id="registrationSuccess">Registration succeeded!</div>
-        <button onclick="goToProfile()">Go to my profile</button>
+        <button onclick="goToMyTasks()">Go to my tasks</button>
     </div>
 
     <script>
@@ -58,7 +58,7 @@
             notification.style.display = 'block';
         }
 
-        function goToProfile() {
+        function goToMyTasks() {
 
             window.location.href = 'http://localhost:8080/dashboard';
             alert('Redirecting to your profile...');
