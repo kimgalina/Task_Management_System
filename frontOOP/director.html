@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/director.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+</head>
+<body>
+    <div class="container">
+
+        <nav class="nav">
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <div id="open-modal-btn"><span class="white-text">My Information</span></div>
+                </li>
+                <li class="nav-item">
+                    <a href="signin.html">Sign Out</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="modal" id="my-modal">
+            <div class="modal__box">
+                <button class="modal__close-btn" id="close-my-modal-btn">
+                    <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
+                            fill="#333333" />
+                        <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
+                    </svg>
+                </button>
+                <div class="modal-info">
+                    <div class="modal-img">
+                        <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
+                    </div>
+                    <div class="modal-personInfo">
+                        <p><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
+                        <p><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
+                        <p><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
+                        <p><span style="font-weight: 600;">Status: </span> Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="welcome-title">
+            <h1>Welcome back, Director!</h1>
+        </div>
+
+        <div class="todo-card-center">
+            <div class="todo-card">
+                <h1>List of Workers</h1>
+                <ul class="todo-card-workers">
+                    <li class="open-todo-btn">Kylychbek Parpiev</li>
+                    <li class="open-todo-btn">Isa Kasymbek uulu</li>
+                    <li class="open-todo-btn">Galina Kim</li>
+                    <li class="open-todo-btn">Palanchaev Palancha</li>
+                    <li class="open-todo-btn">Your Mom</li>
+                    <li class="open-todo-btn">Your Step Sister</li>
+                    <li class="open-todo-btn">I am Stuck!!!</li>
+                    
+                </ul>
+            </div>
+            <div class="todo-card">
+                <h1>List of Managers</h1>
+                <ul class="todo-card-workers">
+                    <li class="open-todo-btn">Johny Sins</li>
+                    <li class="open-todo-btn">Shreck</li>
+                    <li class="open-todo-btn">Nikolay Baskov</li>
+                    <li class="open-todo-btn">Elon Musk</li>
+                    <li class="open-todo-btn">Your sister</li>
+                    <li class="open-todo-btn">Your Step Brother</li>
+                    <li class="open-todo-btn">I am not stuck!!!</li>
+                </ul>
+            </div>
+
+            <div class="todo" id="my-todo">
+                <div class="todo__box">
+                    <div class="todo-info">
+                        <div class="todo-card">
+                            <button class="todo__close-btn" id="close-my-todo-btn">
+                                <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
+                                        fill="#333333" />
+                                    <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
+                                </svg>
+                            </button>
+                            <h1>To Do</h1>
+                            <div class="input-field">
+                              <textarea placeholder="Enter your new todo"></textarea>
+                            </div>
+                            
+                            <div class="filter-options">
+                              <button onclick="filterTasks('all')">All</button>
+                              <button onclick="filterTasks('completed')">Completed</button>
+                              <button onclick="filterTasks('uncompleted')">Uncompleted</button>
+                            </div>
+                      
+                            <ul class="todoLists"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="todo-card">
+                <h1>To Do</h1>
+                <div class="input-field">
+                  <textarea placeholder="Enter your new todo"></textarea>
+                </div>
+                
+                <div class="filter-options">
+                  <button onclick="filterTasks('all')">All</button>
+                  <button onclick="filterTasks('completed')">Completed</button>
+                  <button onclick="filterTasks('uncompleted')">Uncompleted</button>
+                </div>
+
+                <ul class="todoLists"></ul>
+          
+                <div class="pending-tasks">
+                    <span>You have <span class="pending-num"> no </span> tasks pending.</span>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/script.js"></script>
+</body>
+</html>

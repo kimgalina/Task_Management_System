@@ -96,14 +96,6 @@ document.getElementById("my-modal").addEventListener('click', event => {
   event.currentTarget.classList.remove('open');
 });
 
-
-
-
-
-
-
-
-
 const openTodoButtons = document.querySelectorAll(".open-todo-btn");
 const closeTodoButtons = document.querySelectorAll(".todo__close-btn");
 
@@ -113,29 +105,24 @@ closeTodoButtons.forEach(button => {
   });
 });
 
-
-
 openTodoButtons.forEach(button => {
   button.addEventListener("click", function() {
     document.getElementById("my-todo").classList.add("open");
   });
 });
 
-// Modal Window
-// Open Info
 document.getElementById("open-todo-btn").addEventListener("click", function() {
   document.getElementById("my-todo").classList.add("open")
 })
 
-// Close Info
 document.getElementById("todo__close-btn").addEventListener("click", function() {
   document.getElementById("my-todo").classList.remove("open")
 })
 
-// Close Info when clicked out of the modal window
 document.querySelector("#my-todo .todo__box").addEventListener('click', event => {
   event._isClickWithInTodo = true;
 });
+
 document.getElementById("my-todo").addEventListener('click', event => {
   if (event._isClickWithInTodo) return;
   event.currentTarget.classList.remove('open');

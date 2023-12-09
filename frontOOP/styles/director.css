@@ -52,7 +52,7 @@ li {
 }
 .todo-card {
     margin-top: 20px;
-    width: 500px;
+    width: 400px;
     height: auto;
     padding: 30px 40px;
     min-height: 420px;
@@ -164,7 +164,7 @@ textarea::-webkit-scrollbar {
 }
 .todo-card .filter-options button {
     padding: 6px 12px;
-    margin: 20px 0 0 0;
+    margin: 10px 0 0 0;
     outline: none;
     border: none;
     background: #4070f4;
