@@ -1,23 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
 body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-image: url(https://static.vecteezy.com/system/resources/previews/023/407/402/non_2x/space-abstract-background-in-the-style-of-fantasy-illustration-violet-and-blue-colored-cartoon-style-felicia-simion-alien-worlds-paul-pelletier-generat-ai-free-photo.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 .container {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+li {
+    list-style-type: none;
+}
+.nav {
+    padding: 20px;
+    border-radius: 0px 0 10px 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    border-top: none;
+
+}
+.nav-items {
+    display: flex;
+    justify-content: space-between;
+}
+.welcome-title h1 {
+    color: white;
+    text-align: center;
+    padding-top: 12px;
+    font-size: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.todo-card-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+.todo-card {
+    margin-top: 20px;
     width: 500px;
     height: auto;
     padding: 30px 40px;
@@ -27,15 +61,15 @@ body {
     border-radius: 10px;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-
 }
-.container h1 {
+
+.todo-card h1 {
     font-size: 36px;
     text-align: center;
     margin-bottom: 10px;
     color: white;
 }
-.container .input-field {
+.todo-card .input-field {
     height: 64px;
     width: 100%;
 }
@@ -63,8 +97,8 @@ textarea::-webkit-scrollbar {
     color: #707070;
 }
 
-.container .todoLists {
-    max-height: 380px;
+.todo-card .todoLists {
+    max-height: 200px;
     overflow-y: auto;
     padding-right: 10px;
 }
@@ -109,7 +143,7 @@ textarea::-webkit-scrollbar {
 .todoLists .list i:hover {
     opacity: 1;
 }
-.container .pending-tasks {
+.todo-card .pending-tasks {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -134,7 +168,114 @@ textarea::-webkit-scrollbar {
     background-color: #0e4bf1;
 }
 @media screen and (max-width: 350px) {
-    .container {
+    .todo-card {
       padding: 25px 10px;
     }
+}
+.todo-card .filter-options {
+    display: flex;
+    justify-content: space-between;
+}
+.todo-card .filter-options button {
+    padding: 6px 12px;
+    margin: 20px 0 0 0;
+    outline: none;
+    border: none;
+    background: #4070f4;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.todo-card .filter-options button:hover {
+    background-color: #0e4bf1;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99998;
+    backdrop-filter: blur(5px);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .4s, visibility .4s;
+}
+
+.modal__box {
+    position: relative;
+    max-width: 500px;
+    padding: 45px;
+    z-index: 1;
+    margin: 30px 15px;
+    box-shadow: 0px 0px 17px -7px rgba(34, 60, 80, 0.8);
+    transform: scale(0);
+    transition: transform .8s;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    
+}
+.nav-item {
+    opacity: .6;
+}
+.nav-item:hover {
+    opacity: 1;
+}
+.white-text {
+    color: white;
+    cursor: pointer;
+}
+.modal-img {
+    display: flex;
+    align-items: center;
+    
+}
+.modal-img img {
+    margin-right: 30px;
+    border-radius: 10px;
+    height: 100px;
+    width: 100px;
+}
+.modal-info {
+    display: flex;
+}
+
+.modal__close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.modal__close-btn svg path {
+    transition: fill .4s;
+    fill: gray;
+}
+
+.modal__close-btn:hover svg path {
+    fill: blue;
+}
+
+.modal__close-btn:active svg path {
+    fill: rgb(186, 53, 0);
+}
+
+.modal.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal.open .modal__box {
+    transform: scale(1);
 }

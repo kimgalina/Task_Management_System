@@ -1,7 +1,34 @@
-const inputField = document.querySelector(".input-field textarea"),
-  todoLists = document.querySelector(".todoLists"),
+const inputFields = document.querySelectorAll(".input-field textarea"),
+  todoListsArray = document.querySelectorAll(".todoLists"),
+  clearButtons = document.querySelectorAll(".clear-button"), 
   pendingNum = document.querySelector(".pending-num"),
-  clearButton = document.querySelector(".clear-button");
+  filterOptionsArray = document.querySelectorAll(".filter-options");
+
+let currentFilter = "all";
+  
+function filterTasks(filter) {
+  currentFilter = filter;
+  updateTaskList();
+}
+
+function updateTaskList() {
+  const allTasks = document.querySelectorAll(".list");
+
+  allTasks.forEach((task) => {
+    const isCompleted = task.classList.contains("completed");
+    const isUncompleted = task.classList.contains("pending");
+
+    if (
+      (currentFilter === "all") ||
+      (currentFilter === "completed" && isCompleted) ||
+      (currentFilter === "uncompleted" && isUncompleted)
+    ) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+}
 
 function allTasks() {
   let tasks = document.querySelectorAll(".pending");
@@ -18,35 +45,101 @@ function allTasks() {
   clearButton.style.pointerEvents = "none";
 }
 
-inputField.addEventListener("keyup", (e) => {
-  let inputVal = inputField.value.trim();
+inputFields.forEach((inputField, index) => {
+  inputField.addEventListener("keyup", (e) => {
+    let inputVal = inputField.value.trim();
 
-  if (e.key === "Enter" && inputVal.length > 0) {
-    let liTag = ` <li class="list pending" onclick="handleStatus(this)">
-          <input type="checkbox" />
-          <span class="task">${inputVal}</span>
-          <i class="uil uil-trash" onclick="deleteTask(this)"></i>
-        </li>`;
+    if (e.key === "Enter" && inputVal.length > 0) {
+      let liTag = `<li class="list pending" onclick="handleStatus(this)">
+        <input type="checkbox" />
+        <span class="task">${inputVal}</span>
+        <i class="uil uil-trash" onclick="deleteTask(this)"></i>
+      </li>`;
 
-    todoLists.insertAdjacentHTML("beforeend", liTag); 
-    inputField.value = "";
-    allTasks();
-  }
+      todoListsArray[index].insertAdjacentHTML("beforeend", liTag); 
+      inputField.value = "";
+      allTasks();
+      updateTaskList();
+    }
+  });
 });
 
 function handleStatus(e) {
   const checkbox = e.querySelector("input"); 
-  checkbox.checked = checkbox.checked ? false : true;
+  checkbox.checked = !checkbox.checked;
+  e.classList.toggle("completed");
   e.classList.toggle("pending");
   allTasks();
+  updateTaskList();
 }
 
 function deleteTask(e) {
   e.parentElement.remove(); 
   allTasks();
+  updateTaskList();
 }
+updateTaskList();
 
-clearButton.addEventListener("click", () => {
-  todoLists.innerHTML = "";
-  allTasks();
+document.getElementById("open-modal-btn").addEventListener("click", function() {
+  document.getElementById("my-modal").classList.add("open")
+})
+
+document.getElementById("close-my-modal-btn").addEventListener("click", function() {
+  document.getElementById("my-modal").classList.remove("open")
+})
+
+document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
+  event._isClickWithInModal = true;
 });
+document.getElementById("my-modal").addEventListener('click', event => {
+  if (event._isClickWithInModal) return;
+  event.currentTarget.classList.remove('open');
+});
+
+
+
+
+
+
+
+
+
+const openTodoButtons = document.querySelectorAll(".open-todo-btn");
+const closeTodoButtons = document.querySelectorAll(".todo__close-btn");
+
+closeTodoButtons.forEach(button => {
+  button.addEventListener("click", function() {
+    document.getElementById("my-todo").classList.remove("open");
+  });
+});
+
+
+
+openTodoButtons.forEach(button => {
+  button.addEventListener("click", function() {
+    document.getElementById("my-todo").classList.add("open");
+  });
+});
+
+// Modal Window
+// Open Info
+document.getElementById("open-todo-btn").addEventListener("click", function() {
+  document.getElementById("my-todo").classList.add("open")
+})
+
+// Close Info
+document.getElementById("todo__close-btn").addEventListener("click", function() {
+  document.getElementById("my-todo").classList.remove("open")
+})
+
+// Close Info when clicked out of the modal window
+document.querySelector("#my-todo .todo__box").addEventListener('click', event => {
+  event._isClickWithInTodo = true;
+});
+document.getElementById("my-todo").addEventListener('click', event => {
+  if (event._isClickWithInTodo) return;
+  event.currentTarget.classList.remove('open');
+});
+
+
+
