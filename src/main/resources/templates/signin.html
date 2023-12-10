@@ -22,9 +22,21 @@
             <button type="submit" class="btn">Sign In</button>
 
             <div class="sign-up-link">
-                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                <p>Don't have an account? <a href="#" onclick="redirectToSignUp()">Sign Up</a></p>
             </div>
         </form>
     </div>
+    <script>
+        function redirectToSignUp() {
+            // Получаем текущий путь
+            var currentPath = window.location.pathname;
+
+            // Добавляем "/signup" к текущему пути и переносимся на уровень вверх (..)
+            var loginPath = currentPath.replace("/login", "/registration");
+
+            // Перенаправляем пользователя
+            window.location.href =loginPath;
+        }
+    </script>
 </body>
 </html>

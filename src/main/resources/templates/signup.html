@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +9,26 @@
 </head>
 <body>
     <div class="container">
-        <form action="" method="post" name="sign-in">
+        <form th:method="POST" th:action="@{/create-user}" th:object="${user}">
             <h1>Sign Up</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required maxlength="10" autofocus name="name">
+                <input type="text" placeholder="FirstName" required maxlength="10" autofocus  name="firstName" >
                 <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="input-box">
+
+<!--                name - нужен для получения данных через thymeleaf !!!!!!-->
+                <input type="text" placeholder="LastName" required maxlength="10" autofocus name="lastName">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <!-- блок для статуса пользователя -->
+            <div class="input-box">
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="WORKER">Worker</option>
+                    <option value="DIRECTOR">Director</option>
+                    <option value="MANAGER">Manager</option>
+                </select>
             </div>
             
             <div class="input-box">
@@ -22,7 +37,7 @@
             </div>
 
             <div class="input-box">
-                <input type="password" placeholder="Password" required maxlength="8" name="password">
+                 <input type="password" placeholder="Password" required maxlength="8" name="password">
                 <i class="fa-solid fa-lock"></i>
             </div>
 
@@ -33,9 +48,22 @@
             <button type="submit" class="btn">Sign Up</button>
 
             <div class="sign-in sign-up-link">
-                <p>Already have an account? <a href="signin.html">Sign In</a></p>
+                <p>Already have an account? <a href="#" onclick="redirectToSignIn()">Sign In</a></p>
+
             </div> 
         </form>
     </div>
+    <script>
+        function redirectToSignIn() {
+            // Получаем текущий путь
+            var currentPath = window.location.pathname;
+
+            // Добавляем "/signup" к текущему пути и переносимся на уровень вверх (..)
+            var loginPath = currentPath.replace("/registration", "/login");
+
+            // Перенаправляем пользователя
+            window.location.href =loginPath;
+        }
+    </script>
 </body>
 </html>
