@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #notification {
+            display: none;
+            text-align: center;
+            font-size: 60px;
+            padding: 20px;
+            background-color: rgb(112, 177, 47);
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        #notification.success {
+            border-color: #4CAF50;
+            background-color: #dff0d8;
+        }
+
+        #notification button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Congratulations Page</title>
+</head>
+
+<body>
+
+    <div id="notification">
+        <div id="congratulations">Congratulations! 🎉</div>
+        <div id="registrationSuccess">Registration succeeded!</div>
+        <button onclick="goToMyTasks()">Go to my tasks</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            showNotification();
+        });
+
+        function showNotification() {
+            var notification = document.getElementById('notification');
+            notification.style.display = 'block';
+        }
+
+        function goToMyTasks() {
+
+            window.location.href = 'http://localhost:8080/dashboard';
+            alert('Redirecting to your profile...');
+        }
+    </script>
+
+</body>
+
+</html>
