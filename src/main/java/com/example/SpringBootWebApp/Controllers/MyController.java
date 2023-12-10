@@ -14,22 +14,34 @@ public class MyController {
     @GetMapping()
     public String registerNewUser() {
 
-        return "Registration";
+        return "signup";
     }
-    @GetMapping("/dashboard")
-    public String getMyProfile() {
+    @GetMapping("/director")
+    public String getDirectorProfile() {
 
-        return "Dashboard";
+        return "director";
+    }
+    @GetMapping("/manager")
+    public String getManagerProfile() {
+
+        return "manager";
+    }
+    @GetMapping("/signin")
+    public String signIn() {
+
+        return "signin";
+    }
+    @GetMapping("/worker")
+    public String getWorkerProfile() {
+
+        return "worker";
     }
     @GetMapping("/registration-success")
     public String showCongratulations() {
-        return "Congratulations";
+        return "todolist";
     }
 
-    @GetMapping("/sign-in")
-    public String signIn() {
-       return "sign_in";
-    }
+
 
     @PostMapping("/")
     public String create(@ModelAttribute("newUser") User user) {
