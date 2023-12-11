@@ -32,10 +32,11 @@ public class UserController {
 
     @PostMapping("/login-user")
     public String login(@ModelAttribute("user") User newUser){
+        System.out.println("пришедший с формы user " + newUser.getFirstName() + " " + newUser.getStatus());
         User existedUser = userDAO.findUser(newUser);
         if(existedUser != null) {
-            System.out.println(newUser.getEmail() + " " + newUser.getFirstName() + " " + newUser.getLastName() + " " +
-                    newUser.getPassword() + " " + newUser.getStatus());// check
+            System.out.println(existedUser.getEmail() + " " + existedUser.getFirstName() + " " + existedUser.getLastName() + " " +
+                    existedUser.getPassword() + " " + existedUser.getStatus() );// check
             return "redirect:/user/" + existedUser.getId();
         }
         return "redirect:/login";
@@ -44,6 +45,7 @@ public class UserController {
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
         model.addAttribute("user", user);
+        System.out.println(user.getFirstName() + " " + user.getStatus());
         switch(user.getStatus()) {
             case WORKER :
                 return "worker";

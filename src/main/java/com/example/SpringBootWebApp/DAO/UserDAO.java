@@ -16,10 +16,10 @@ public class UserDAO {
 
     //////// потом удалить
     public UserDAO() {
-        db.add(new User("Galina","Kim", UserStatus.MANAGER));
-        db.add(new User("Anna","Karenina", UserStatus.WORKER));
-        db.add(new User("Alia","ost", UserStatus.WORKER));
-        db.add(new User("NNNN","MMM", UserStatus.WORKER));
+        db.add(new User("Galina","Kim", UserStatus.MANAGER, "kim",0));
+        db.add(new User("Anna","Karenina", UserStatus.WORKER, "Karenina",1));
+        db.add(new User("Alia","ost", UserStatus.WORKER,"ost",2));
+        db.add(new User("NNNN","MMM", UserStatus.WORKER, "MMM",3));
     }
 
 
@@ -29,12 +29,12 @@ public class UserDAO {
         System.out.println("user added to db");
         // logic with db
         db.add(user);
-        user.setId(db.size());
+        user.setId(db.size() - 1);
         return true;
     }
 
     public User findById(int id) {
-        User user = db.get(id-1);
+        User user = db.get(id);
         System.out.println(user.getId());
         return user;
     }

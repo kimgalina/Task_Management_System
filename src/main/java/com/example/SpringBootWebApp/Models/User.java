@@ -21,10 +21,12 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, UserStatus status) {
+    public User(String firstName, String lastName, UserStatus status, String password, int id) {
         this.firstName = firstName;
         this.status = status;
         this.lastName = lastName;
+        this.password = password;
+        this.id = id;
     }
 
 

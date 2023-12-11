@@ -44,7 +44,7 @@
         </div>
 
         <div class="welcome-title">
-            <h1>Welcome back, Manager!</h1>
+            <h1 th:text="${'Welcome back , ' + user.getFirstName()}">Welcome back, Manager!</h1>
         </div>
 
         <div class="todo-card-center">
