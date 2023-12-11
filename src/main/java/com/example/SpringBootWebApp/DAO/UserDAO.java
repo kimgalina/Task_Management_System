@@ -11,7 +11,9 @@ import java.util.List;
 public class UserDAO {
     private final List<User> db = new ArrayList<>();
 
-
+    public List<User> getUserDB() {
+        return db;
+    }
 
 
     //////// потом удалить

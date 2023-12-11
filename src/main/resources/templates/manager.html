@@ -34,10 +34,10 @@
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
                     <div class="modal-personInfo">
-                        <p><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
-                        <p><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
-                        <p><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
-                        <p><span style="font-weight: 600;">Status: </span> Manager</p>
+                        <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
+                        <p th:text="${user.getEmail()}"><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
+                        <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
+                        <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Manager</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,6 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
-<!--                    <li class="open-todo-btn">Kylychbek Parpiev</li>-->
                     <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.lastName}"></li>
                     
                 </ul>
@@ -78,7 +77,9 @@
                               <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                             </div>
                       
-                            <ul class="todoLists"></ul>
+                            <ul class="todoLists">
+                                <li th:each="task : ${tasks}" class="open-todo-btn" th:text="${task.getTaskContent()}"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -96,16 +97,16 @@
                   <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
           
-                <ul class="todoLists"></ul>
+                <ul class="todoLists">
+                    <li th:each="task : ${tasks}" th:text="${task.getTaskContent()}"></li>
+                </ul>
           
                 <div class="pending-tasks">
                     <span>You have <span class="pending-num"> no </span> tasks pending.</span>
             </div>
             
         </div>
-
-        
-        
+        </div>
     </div>
     <script src="scripts/script.js"></script>
 </body>

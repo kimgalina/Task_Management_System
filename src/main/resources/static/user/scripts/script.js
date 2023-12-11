@@ -46,17 +46,40 @@ function allTasks() {
 }
 
 inputFields.forEach((inputField, index) => {
-  inputField.addEventListener("keyup", (e) => {
+  inputField.addEventListener("keyup", async (e) => {
     let inputVal = inputField.value.trim();
 
     if (e.key === "Enter" && inputVal.length > 0) {
+      // отправляем содержимое task на сервер
+      try {
+        const currentUrl = window.location.href;
+        const newUrl = `${currentUrl}/new-task`;
+
+        const response = await fetch(newUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', // изменено на форму
+          },
+          body: `taskContent=${encodeURIComponent(inputVal)}`, // изменено на форму
+        });
+
+        if (response.ok) {
+          // Ваш код обработки успешного ответа (если необходимо)
+          console.log("OK post");
+        } else {
+          // Ваш код обработки ошибки
+          console.error('Failed to add task');
+        }
+      } catch (error) {
+        console.error('Error during POST request:', error);
+      }
       let liTag = `<li class="list pending" onclick="handleStatus(this)">
         <input type="checkbox" />
         <span class="task">${inputVal}</span>
         <i class="uil uil-trash" onclick="deleteTask(this)"></i>
       </li>`;
 
-      todoListsArray[index].insertAdjacentHTML("beforeend", liTag); 
+      todoListsArray[index].insertAdjacentHTML("beforeend", liTag);
       inputField.value = "";
       allTasks();
       updateTaskList();

@@ -16,7 +16,7 @@
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
                 <li class="nav-item">
-                    <a href="signin.html">Sign Out</a>
+                    <a href="#" onclick="redirectToSignIn()">Sign Out</a>
                 </li>
             </ul>
         </nav>
@@ -34,10 +34,10 @@
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
                     <div class="modal-personInfo">
-                        <p><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
-                        <p><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
-                        <p><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
-                        <p><span style="font-weight: 600;">Status: </span> Worker</p>
+                        <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
+                        <p th:text="${user.getEmail()}"><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
+                        <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
+                        <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Worker</p>
                     </div>
                 </div>
             </div>
@@ -51,8 +51,10 @@
             <div class="todo-card">
                 <h1>To Do</h1>
                 <div class="input-field">
-                  <textarea placeholder="Enter your new todo"></textarea>
+
+                  </textarea> <textarea placeholder="Enter your new todo"></textarea>
                 </div>
+
                 
                 <div class="filter-options">
                   <button onclick="filterTasks('all')">All Tasks</button>
@@ -60,7 +62,9 @@
                   <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
           
-                <ul class="todoLists"></ul>
+                <ul class="todoLists">
+                    <li th:each="task : ${tasks}"  th:text="${task.getTaskContent()}"></li>
+                </ul>
           
                 <div class="pending-tasks">
                   <span
