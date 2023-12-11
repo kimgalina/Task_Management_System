@@ -59,7 +59,11 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
-                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.lastName}"><a href="user.html">User</a></li>
+                    <li th:each="worker : ${workers}" class="open-todo-btn">
+                        <a th:href="@{'/assign-task/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
+                    </li>
+
+
                 </ul>
             </div>
 
