@@ -16,7 +16,7 @@
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
                 <li class="nav-item">
-                    <a href="signin.html">Sign Out</a>
+                    <a href="#" onclick="redirectToSignIn()">Sign Out</a>
                 </li>
             </ul>
         </nav>
@@ -51,26 +51,14 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
-                    <li class="open-todo-btn">Kylychbek Parpiev</li>
-                    <li class="open-todo-btn">Isa Kasymbek uulu</li>
-                    <li class="open-todo-btn">Galina Kim</li>
-                    <li class="open-todo-btn">Palanchaev Palancha</li>
-                    <li class="open-todo-btn">Your Mom</li>
-                    <li class="open-todo-btn">Your Step Sister</li>
-                    <li class="open-todo-btn">I am Stuck!!!</li>
+                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"></li>
                     
                 </ul>
             </div>
             <div class="todo-card">
                 <h1>List of Managers</h1>
                 <ul class="todo-card-workers">
-                    <li class="open-todo-btn">Johny Sins</li>
-                    <li class="open-todo-btn">Shreck</li>
-                    <li class="open-todo-btn">Nikolay Baskov</li>
-                    <li class="open-todo-btn">Elon Musk</li>
-                    <li class="open-todo-btn">Your sister</li>
-                    <li class="open-todo-btn">Your Step Brother</li>
-                    <li class="open-todo-btn">I am not stuck!!!</li>
+                    <li th:each="manager : ${managers}" class="open-todo-btn" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"></li>
                 </ul>
             </div>
 

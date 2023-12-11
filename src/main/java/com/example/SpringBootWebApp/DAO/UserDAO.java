@@ -1,6 +1,7 @@
 package com.example.SpringBootWebApp.DAO;
 
 import com.example.SpringBootWebApp.Models.User;
+import com.example.SpringBootWebApp.UserStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,6 +10,17 @@ import java.util.List;
 @Component
 public class UserDAO {
     private final List<User> db = new ArrayList<>();
+
+
+
+
+    //////// потом удалить
+    public UserDAO() {
+        db.add(new User("Galina","Kim", UserStatus.MANAGER));
+        db.add(new User("Anna","Karenina", UserStatus.WORKER));
+        db.add(new User("Alia","ost", UserStatus.WORKER));
+        db.add(new User("NNNN","MMM", UserStatus.WORKER));
+    }
 
 
     /// logic of connecting and operating with database
@@ -35,4 +47,24 @@ public class UserDAO {
         }
         return null;
     }
+
+    public List<User> getAllWorkers() {
+        List<User> workers = new ArrayList<>();
+        for(User person : db) {
+            if(person.getStatus()== UserStatus.WORKER) {
+                workers.add(person);
+            }
+        }
+        return workers;
+    }
+    public List<User> getAllManagers() {
+        List<User> managers = new ArrayList<>();
+        for(User person : db) {
+            if(person.getStatus()== UserStatus.MANAGER) {
+                managers.add(person);
+            }
+        }
+        return managers;
+    }
+
 }

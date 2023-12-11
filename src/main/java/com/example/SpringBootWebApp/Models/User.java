@@ -17,6 +17,17 @@ public class User {
 
     private File photo;
 
+    public User() {
+
+    }
+
+    public User(String firstName, String lastName, UserStatus status) {
+        this.firstName = firstName;
+        this.status = status;
+        this.lastName = lastName;
+    }
+
+
     public int getId() {
         return id;
     }

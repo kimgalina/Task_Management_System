@@ -43,16 +43,23 @@ public class UserController {
     @GetMapping("/user/{id}")
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
-        model.addAttribute("product", user);
+        model.addAttribute("user", user);
         switch(user.getStatus()) {
             case WORKER :
                 return "worker";
             case MANAGER:
+                model.addAttribute("workers",userDAO.getAllWorkers());
                 return "manager";
             case DIRECTOR:
+                model.addAttribute("workers",userDAO.getAllWorkers());
+                model.addAttribute("managers",userDAO.getAllManagers());
                 return "director";
         }
         return null;
     }
+
+
+
+
 
 }

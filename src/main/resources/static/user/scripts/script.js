@@ -128,5 +128,14 @@ document.getElementById("my-todo").addEventListener('click', event => {
   event.currentTarget.classList.remove('open');
 });
 
+function redirectToSignIn() {
+  // Получаем текущий путь
+  var currentPath = window.location.pathname;
 
+  // Добавляем "/signup" к текущему пути и переносимся на уровень вверх (..)
+  var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
+
+  // Перенаправляем пользователя
+  window.location.href =loginPath;
+}
 
