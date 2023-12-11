@@ -60,16 +60,20 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
+
                     <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"><a href="user.html">User</a></li>
                     <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"><a href="user.html">User2</a></li>
+
 
                 </ul>
             </div>
             <div class="todo-card">
                 <h1>List of Managers</h1>
                 <ul class="todo-card-workers">
+
                     <li th:each="manager : ${managers}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"><a href="user.html">User</a></li>
                     <li th:each="manager : ${managers}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"><a href="user.html">User</a></li>
+
                 </ul>
             </div>
 

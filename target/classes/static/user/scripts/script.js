@@ -5,7 +5,7 @@ const inputFields = document.querySelectorAll(".input-field textarea"),
   filterOptionsArray = document.querySelectorAll(".filter-options");
 
 let currentFilter = "all";
-  
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function filterTasks(filter) {
   currentFilter = filter;
   updateTaskList();
@@ -123,6 +123,7 @@ document.getElementById("my-modal").addEventListener('click', event => {
 const edit = document.querySelectorAll('.edit');
 const text = document.querySelectorAll('.text');
 
+
 for (let i = 0; i < edit.length; i++) {
   let editMode = false;
   
@@ -135,9 +136,10 @@ for (let i = 0; i < edit.length; i++) {
       text[i].setAttribute('contentEditable', true);
       text[i].focus();
     }
-    
     editMode = !editMode;
+
   });
+
 
   text[i].addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
@@ -145,6 +147,42 @@ for (let i = 0; i < edit.length; i++) {
       edit[i].click(); 
     }
   });
+}
+
+openTodoButtons.forEach(button => {
+  button.addEventListener("click", function() {
+
+    // Добавляем цифру к текущему URL при открытии
+    addUserToUrl(button.textContent);
+    document.getElementById("my-todo").classList.add("open");
+
+  });
+});
+
+// Функция, которая добавляет цифру к текущему URL
+function addUserToUrl(user) {
+  const currentUrl = new URL(window.location.href);
+
+  // Если текущий путь не содержит "/assign-task", добавляем его
+  if (!currentUrl.pathname.includes("/assign-task")) {
+    currentUrl.pathname += "/assign-task";
+  }
+
+  // Добавляем параметр "user" с текстом кнопки
+  currentUrl.searchParams.set('user', user);
+
+  // Заменяем текущий URL
+  window.history.pushState({}, '', currentUrl);
+}
+
+// Функция, которая убирает цифру из текущего URL
+function removeUserFromUrl() {
+  const currentUrl = new URL(window.location.href);
+  currentUrl.searchParams.delete('user');
+  // if (!currentUrl.pathname.includes("/assign-task")) {
+  //   currentUrl.pathname -= "/assign-task";
+  // }
+  window.history.pushState({}, '', currentUrl);
 }
 
 function redirectToSignIn() {
