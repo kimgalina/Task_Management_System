@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
-    <link rel="stylesheet" href="styles/director.css">
+    <link rel="stylesheet" href="styles/worker.css">
 </head>
 <body>
     <div class="container">
@@ -33,6 +33,7 @@
                     <div class="modal-img">
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
+
                     <div class="modal-personInfo">
                         <div class="modal-info-input">
                             <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span><span class="text">Qwerty Qwerty</span></p>
@@ -46,55 +47,42 @@
                             <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span><span class="text">+996 XXX XXX XXX</span></p>
                             <button class="edit">&#9998;</button>
                         </div>
-                        <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Director</p>
+                        <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span></p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="welcome-title">
-            <h1 th:text="${'Welcome back , ' + user.getFirstName()}">Welcome back, Director!</h1>
+            <h1 th:text="${'Welcome back , ' + user.getFirstName()}" >Worker's tasks</h1>
         </div>
 
         <div class="todo-card-center">
             <div class="todo-card">
-                <h1>List of Workers</h1>
-                <ul class="todo-card-workers">
-                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"><a href="user.html">User</a></li>
-                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"><a href="user.html">User2</a></li>
-
-                </ul>
-            </div>
-            <div class="todo-card">
-                <h1>List of Managers</h1>
-                <ul class="todo-card-workers">
-                    <li th:each="manager : ${managers}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"><a href="user.html">User</a></li>
-                    <li th:each="manager : ${managers}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"><a href="user.html">User</a></li>
-                </ul>
-            </div>
-
-            <div class="todo-card">
                 <h1>To Do</h1>
                 <div class="input-field">
+
                   <textarea placeholder="Enter your new todo"></textarea>
                 </div>
+
                 
                 <div class="filter-options">
-                  <button onclick="filterTasks('all')">All</button>
-                  <button onclick="filterTasks('completed')">Completed</button>
-                  <button onclick="filterTasks('uncompleted')">Uncompleted</button>
+                  <button onclick="filterTasks('all')">All Tasks</button>
+                  <button onclick="filterTasks('completed')">Completed Tasks</button>
+                  <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
-
+          
                 <ul class="todoLists">
-                    <li th:each="task : ${tasks}" th:text="${task.getTaskContent()}"></li>
+                    <li th:each="task : ${tasks}"  th:text="${task.getTaskContent()}"></li>
                 </ul>
           
                 <div class="pending-tasks">
-                    <span>You will have tasks pending.</span>
+                  <span>You have <span class="pending-num"> no </span> tasks pending.</span>
                 </div>
             </div>
         </div>
+        
     </div>
-    <script src="scripts/script.js"></script>
+    <script src="scripts/worker.js"></script>
 </body>
 </html>
