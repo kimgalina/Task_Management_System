@@ -133,3 +133,29 @@ function redirectToSignIn() {
     window.location.href =loginPath;
 }
 
+let edit = document.querySelectorAll('.edit');
+let text = document.querySelectorAll('.text');
+
+for( let i = 0; i < edit.length; i++ ){
+  let editMode = false;
+  
+  edit[i].addEventListener('click', function(){
+    if( editMode) {
+      this.innerHTML = "&#9998;";
+      text[i].removeAttribute('contentEditable');
+    } else {
+      this.textContent = "OK";      
+      text[i].setAttribute('contentEditable', true);
+      text[i].focus();
+    }
+    
+    editMode = !editMode;
+  });
+
+  text[i].addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      edit[i].click(); 
+    }
+  });
+}

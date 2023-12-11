@@ -325,3 +325,32 @@ textarea::-webkit-scrollbar {
 .todo-card-workers li {
     opacity: .8;
 }
+
+.modal-personInfo .text{
+    padding: 5px
+  }
+  
+.modal-personInfo .text[contentEditable] {
+    box-shadow: 0 2px 5px rgba(0, 108, 241, 0.4);
+    transition: box-shadow 0.3s ease-in-out;
+    border-radius: 5px;
+    outline: none;
+}
+
+.modal-personInfo button {
+    padding: 0 5px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    border: 1px solid rgba(102, 102, 102, 0.4);
+    border-radius: 10%;
+    opacity: 0.5
+}
+.modal-personInfo button:hover {
+    opacity: 1;
+}
+.modal-info-input {
+    display: flex;
+    align-items: center;
+}

@@ -120,36 +120,58 @@ document.getElementById("my-modal").addEventListener('click', event => {
 });
 
 const openTodoButtons = document.querySelectorAll(".open-todo-btn");
-const closeTodoButtons = document.querySelectorAll(".todo__close-btn");
-
-closeTodoButtons.forEach(button => {
-  button.addEventListener("click", function() {
-    document.getElementById("my-todo").classList.remove("open");
-  });
-});
-
 openTodoButtons.forEach(button => {
   button.addEventListener("click", function() {
     document.getElementById("my-todo").classList.add("open");
   });
 });
 
-document.getElementById("open-todo-btn").addEventListener("click", function() {
-  document.getElementById("my-todo").classList.add("open")
-})
+// Добавление обработчика событий для кнопок закрытия todo
+const closeTodoButtons = document.querySelectorAll(".todo__close-btn");
+closeTodoButtons.forEach(button => {
+  button.addEventListener("click", function() {
+    document.getElementById("my-todo").classList.remove("open");
+  });
+});
 
-document.getElementById("todo__close-btn").addEventListener("click", function() {
-  document.getElementById("my-todo").classList.remove("open")
-})
-
+// Добавление обработчика событий для todo__box
 document.querySelector("#my-todo .todo__box").addEventListener('click', event => {
   event._isClickWithInTodo = true;
 });
 
+// Добавление обработчика событий для todo
 document.getElementById("my-todo").addEventListener('click', event => {
   if (event._isClickWithInTodo) return;
   event.currentTarget.classList.remove('open');
 });
+
+// Добавление обработчиков событий для редактирования текста
+const edit = document.querySelectorAll('.edit');
+const text = document.querySelectorAll('.text');
+
+for (let i = 0; i < edit.length; i++) {
+  let editMode = false;
+  
+  edit[i].addEventListener('click', function(){
+    if( editMode) {
+      this.innerHTML = "&#9998;";
+      text[i].removeAttribute('contentEditable');
+    } else {
+      this.textContent = "OK";      
+      text[i].setAttribute('contentEditable', true);
+      text[i].focus();
+    }
+    
+    editMode = !editMode;
+  });
+
+  text[i].addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      edit[i].click(); 
+    }
+  });
+}
 
 function redirectToSignIn() {
   // Получаем текущий путь

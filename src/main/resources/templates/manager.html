@@ -34,9 +34,18 @@
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
                     <div class="modal-personInfo">
-                        <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span>Qwerty Qwerty</p>
-                        <p th:text="${user.getEmail()}"><span style="font-weight: 600;">Email: </span> qwerty@gmail.com</p>
-                        <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span>+996 XXX XXX XXX</p>
+                        <div class="modal-info-input">
+                            <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span><span class="text">Qwerty Qwerty</span></p>
+                            <button class="edit">&#9998;</button>
+                        </div>
+                        <div class="modal-info-input">
+                            <p th:text="${user.getEmail()}"><span style="font-weight: 600;">Email: </span> <span class="text">qwerty@gmail.com</span></p>
+                            <button class="edit">&#9998;</button>
+                        </div>
+                        <div class="modal-info-input">
+                            <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span><span class="text">+996 XXX XXX XXX</span></p>
+                            <button class="edit">&#9998;</button>
+                        </div>
                         <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Manager</p>
                     </div>
                 </div>
@@ -102,7 +111,8 @@
                 </ul>
           
                 <div class="pending-tasks">
-                    <span>You have <span class="pending-num"> no </span> tasks pending.</span>
+                    <span>You will have tasks pending here.</span>
+                </div>
             </div>
             
         </div>
