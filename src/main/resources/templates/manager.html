@@ -51,8 +51,8 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
-                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.lastName}"></li>
-                    
+                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.lastName + ' ' + worker.getId()}">
+                    </li>
                 </ul>
             </div>
             <div class="todo" id="my-todo">
@@ -70,15 +70,15 @@
                             <div class="input-field">
                               <textarea placeholder="Enter your new todo"></textarea>
                             </div>
-                            
-                            <div class="filter-options">
-                              <button onclick="filterTasks('all')">All Tasks</button>
-                              <button onclick="filterTasks('completed')">Completed Tasks</button>
-                              <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
-                            </div>
-                      
+
+<!--                            <div class="filter-options">-->
+<!--                              <button onclick="filterTasks('all')">All Tasks</button>-->
+<!--                              <button onclick="filterTasks('completed')">Completed Tasks</button>-->
+<!--                              <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>-->
+<!--                            </div>-->
+
                             <ul class="todoLists">
-                                <li th:each="task : ${tasks}" class="open-todo-btn" th:text="${task.getTaskContent()}"></li>
+
                             </ul>
                         </div>
                     </div>

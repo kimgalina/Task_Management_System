@@ -124,15 +124,54 @@ const closeTodoButtons = document.querySelectorAll(".todo__close-btn");
 
 closeTodoButtons.forEach(button => {
   button.addEventListener("click", function() {
+    // Убираем цифру из текущего URL при закрытии
+    removeUserFromUrl();
+    // Если текущий путь содержит "/assign-task", удаляем его
+    const currentUrl = new URL(window.location.href);
+    if (currentUrl.pathname.includes("/assign-task")) {
+      currentUrl.pathname = currentUrl.pathname.replace("/assign-task", "");
+      // Заменяем текущий URL
+      window.history.pushState({}, '', currentUrl);
+    }
     document.getElementById("my-todo").classList.remove("open");
   });
 });
 
 openTodoButtons.forEach(button => {
   button.addEventListener("click", function() {
+
+    // Добавляем цифру к текущему URL при открытии
+    addUserToUrl(button.textContent);
     document.getElementById("my-todo").classList.add("open");
+
   });
 });
+
+// Функция, которая добавляет цифру к текущему URL
+function addUserToUrl(user) {
+  const currentUrl = new URL(window.location.href);
+
+  // Если текущий путь не содержит "/assign-task", добавляем его
+  if (!currentUrl.pathname.includes("/assign-task")) {
+    currentUrl.pathname += "/assign-task";
+  }
+
+  // Добавляем параметр "user" с текстом кнопки
+  currentUrl.searchParams.set('user', user);
+
+  // Заменяем текущий URL
+  window.history.pushState({}, '', currentUrl);
+}
+
+// Функция, которая убирает цифру из текущего URL
+function removeUserFromUrl() {
+  const currentUrl = new URL(window.location.href);
+  currentUrl.searchParams.delete('user');
+  // if (!currentUrl.pathname.includes("/assign-task")) {
+  //   currentUrl.pathname -= "/assign-task";
+  // }
+  window.history.pushState({}, '', currentUrl);
+}
 
 document.getElementById("open-todo-btn").addEventListener("click", function() {
   document.getElementById("my-todo").classList.add("open")

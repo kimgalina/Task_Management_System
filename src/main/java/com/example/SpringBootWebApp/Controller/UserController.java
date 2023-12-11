@@ -83,9 +83,15 @@ public class UserController {
         return "redirect:/user/" + id ; //
     }
 
-
-
-
-
+    @PostMapping("/user/{id}/assign-task")
+    public String assignTaskTo(@PathVariable int id, @RequestParam("user") String userName, @RequestParam("taskContent") String taskContent) {
+        userName = userName.split("/")[0];
+        System.out.println("IN ASSIGN TASK TASK " +taskContent+ " NEED TO BE ASSIGNED TO " + userName);
+        String[] userData = userName.split(" "); // firstName lastName id
+        Task task = new Task(taskContent,Integer.parseInt(userData[userData.length - 1]));
+        taskDAO.addTask(task);
+        // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
+        return "redirect:/user/" + id;
+    }
 
 }

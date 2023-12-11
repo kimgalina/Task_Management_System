@@ -51,14 +51,14 @@
             <div class="todo-card">
                 <h1>List of Workers</h1>
                 <ul class="todo-card-workers">
-                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}"></li>
+                    <li th:each="worker : ${workers}" class="open-todo-btn" th:text="${worker.getFirstName() + ' ' + worker.getLastName()+ ' ' + worker.getId()}"></li>
                     
                 </ul>
             </div>
             <div class="todo-card">
                 <h1>List of Managers</h1>
                 <ul class="todo-card-workers">
-                    <li th:each="manager : ${managers}" class="open-todo-btn" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}"></li>
+                    <li th:each="manager : ${managers}" class="open-todo-btn" th:text="${manager.getFirstName() + ' ' + manager.getLastName()+ ' ' + manager.getId()}"></li>
                 </ul>
             </div>
 

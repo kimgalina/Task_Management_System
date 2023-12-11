@@ -1,8 +1,12 @@
 package com.example.SpringBootWebApp.Models;
 
+import com.example.SpringBootWebApp.DAO.TaskDAO;
+import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.UserStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.util.List;
 
 public class User {
     private int id;
@@ -16,6 +20,7 @@ public class User {
     private String phoneNumber;
 
     private File photo;
+
 
     public User() {
 
@@ -92,5 +97,9 @@ public class User {
 
     public void setPhoto(File photo) {
         this.photo = photo;
+    }
+
+    public List<Task> getUserTasks() {
+        return TaskDAO.getTasksByUser(id);
     }
 }

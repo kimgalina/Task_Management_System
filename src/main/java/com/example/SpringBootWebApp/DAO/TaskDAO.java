@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class TaskDAO {
-    private final List<Task> db = new ArrayList<>();
+    private static final List<Task> db = new ArrayList<>();
     @Autowired
     private UserDAO userDAO;
     public void addTask(Task task) {
@@ -20,7 +20,7 @@ public class TaskDAO {
     }
 
     // метод возвращает все таски конкретного пользователя
-    public List<Task> getTasksByUser(int userId) {
+    public static List<Task> getTasksByUser(int userId) {
         List<Task> usersTask = new ArrayList<>();
         for(Task task : db) {
             if(task.getUserId() == userId) {

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public class UserDAO {
-    private final List<User> db = new ArrayList<>();
+    private static final List<User> db = new ArrayList<>();
 
     public List<User> getUserDB() {
         return db;
