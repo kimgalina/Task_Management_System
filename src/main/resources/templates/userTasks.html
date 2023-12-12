@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isa Tasks</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url(https://static.vecteezy.com/system/resources/previews/023/407/402/non_2x/space-abstract-background-in-the-style-of-fantasy-illustration-violet-and-blue-colored-cartoon-style-felicia-simion-alien-worlds-paul-pelletier-generat-ai-free-photo.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .task input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .task button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #taskInput {
+            margin-top: 20px;
+        }
+
+        #addTaskButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Isa Tasks</h1>
+
+<div id="taskInput">
+    <input type="text" id="newTaskText" placeholder="Enter task...">
+    <button id="addTaskButton" onclick="addTask()">Add Task</button>
+</div>
+
+<!--<ul id="taskList">-->
+<!--    <li class="task" th:each="task : ${tasks}" th:text="${task.getTaskContent()}" th:checked="${task.isDone()}"></li>-->
+<!--</ul>-->
+<ul id="taskList">
+    <li class="task" th:each="task : ${tasks}">
+        <input type="checkbox" th:checked="${task.isDone()}">
+        <span th:text="${task.getTaskContent()}"></span>
+        <button onclick="editTask(this)">Edit</button>
+        <button onclick="deleteTask(this)">Delete</button>
+    </li>
+</ul>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const taskList = document.getElementById("taskList");
+        const newTaskTextElement = document.getElementById("newTaskText");
+
+        function createTaskElement(taskText, isChecked) {
+            const taskElement = document.createElement("li");
+            taskElement.className = "task";
+            taskElement.innerHTML = `
+                <input type="checkbox" ${isChecked ? 'checked' : ''}>
+                <span>${taskText}</span>
+                <button onclick="editTask(this)">Edit</button>
+                <button onclick="deleteTask(this)">Delete</button>
+            `;
+            return taskElement;
+        }
+
+        window.addTask = function () {
+            const newTaskText = newTaskTextElement.value.trim();
+            if (newTaskText !== "") {
+                const isChecked = false; // Новая задача всегда не выполнена
+                const taskElement = createTaskElement(newTaskText, isChecked);
+                taskList.appendChild(taskElement);
+                newTaskTextElement.value = "";
+            }
+        };
+
+        window.editTask = function (button) {
+            const taskElement = button.parentElement;
+            const taskText = taskElement.querySelector("span").innerText;
+            const newText = prompt("Edit task:", taskText);
+            if (newText !== null) {
+                taskElement.querySelector("span").innerText = newText;
+            }
+        };
+
+        window.deleteTask = function (button) {
+            const taskElement = button.parentElement;
+            taskList.removeChild(taskElement);
+        };
+
+        // Пример задач
+        // Измените этот код, чтобы он использовал данные из вашей модели Thymeleaf
+        addTask("Task 1", false);
+        addTask("Task 2", true);
+        addTask("Task 3", false);
+    });
+</script>
+
+</body>
+</html>
+
+
+

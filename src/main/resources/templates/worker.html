@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
     <link rel="stylesheet" href="styles/worker.css">
+
 </head>
 <body>
     <div class="container">
@@ -75,6 +76,7 @@
                 <ul class="todoLists">
                     <li th:each="task : ${tasks}"  th:text="${task.getTaskContent()}"></li>
                 </ul>
+
           
                 <div class="pending-tasks">
                   <span>You have <span class="pending-num"> no </span> tasks pending.</span>

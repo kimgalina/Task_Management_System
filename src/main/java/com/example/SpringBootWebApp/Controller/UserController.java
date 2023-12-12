@@ -97,7 +97,8 @@ public class UserController {
     public String showUsersTasks(@PathVariable int userId,Model model) {
         model.addAttribute("user",userDAO.findById(userId));
         model.addAttribute("tasks",taskDAO.getTasksByUser(userId));
-        return "user";
+        System.out.println("in get method");
+        return "userTasks";
     }
 
 }

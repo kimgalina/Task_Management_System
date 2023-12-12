@@ -102,7 +102,7 @@ textarea::-webkit-scrollbar {
     overflow-y: auto;
     padding-right: 10px;
 }
-.todoLists .list {
+.todoLists .list{
     display: flex;
     align-items: center;
     list-style: none;
