@@ -91,27 +91,40 @@ public class UserController {
         return "userTasks";
     }
 
-    @PatchMapping("/assign-task/{userId}/edit-task/{taskText}")
+    @PatchMapping("/assign-task/{userId}/edit-task")
     @ResponseBody
-    public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @PathVariable String taskText,
-                                               @RequestParam("taskContent") String taskNewText) {
+    public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
+                                               @RequestParam("taskNewContent") String taskNewText) {
        // изменить таску с taskContent = taskText на taskContent = taskNewText
-        taskDAO.editTaskContentByUser(userId, taskText, taskNewText);
+        taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 
         return ResponseEntity.ok("Task updated successfully");
     }
 
-    @PatchMapping("/user/{userId}/edit-task/{taskText}")
+    @PatchMapping("/user/{userId}/edit-task")
     @ResponseBody
-    public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @PathVariable String taskText,
-                                                        @RequestParam("taskContent") String taskNewText) {
+    public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
+                                                        @RequestParam("taskNewContent") String taskNewText) {
         // изменить таску с taskContent = taskText на taskContent = taskNewText
-        taskDAO.editTaskContentByUser(userId, taskText, taskNewText);
+        taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 
         return ResponseEntity.ok("Task updated successfully");
     }
 
+    @DeleteMapping("/user/{userId}/delete-task/{taskContent}")
+    @ResponseBody
+    public ResponseEntity<String> deleteUserTaskByUser(@PathVariable int userId, @PathVariable String taskContent) {
 
+        taskDAO.deleteUserTask(userId,taskContent);
+        return ResponseEntity.ok("Task deleted successfully");
+    }
+    @DeleteMapping("/assign-task/{userId}/delete-task/{taskContent}")
+    @ResponseBody
+    public ResponseEntity<String> deleteUserTaskBySomeone(@PathVariable int userId, @PathVariable String taskContent) {
+
+        taskDAO.deleteUserTask(userId,taskContent);
+        return ResponseEntity.ok("Task deleted successfully");
+    }
 
 
 }

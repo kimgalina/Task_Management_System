@@ -60,11 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 const currentUrl = window.location.href;
 
-                const updateUrl = `${currentUrl}/edit-task/${taskText}`;
+                const updateUrl = `${currentUrl}/edit-task`;
                 console.log(updateUrl);
 
                 const formData = new FormData();
-                formData.append('taskContent', newText);
+                formData.append('taskNewContent', newText);
+                formData.append('taskOldContent', taskText);
 
                 const response = await fetch(updateUrl, {
                     method: 'PATCH',
@@ -84,9 +85,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    window.deleteTask = function (button) {
+    window.deleteTask = async function (button) {
         const taskElement = button.parentElement;
+        const taskText = taskElement.querySelector("span").innerText;
         taskList.removeChild(taskElement);
+        // запрос на сервер для изменения таски
+        try {
+            const currentUrl = window.location.href;
+
+            const updateUrl = `${currentUrl}/delete-task/${taskText}`;
+            console.log(updateUrl);
+
+            const response = await fetch(updateUrl, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Your code for a successful delete
+                console.log("OK delete");
+            } else {
+                // Your code for handling errors
+                console.error('Failed to delete task');
+            }
+        } catch (error) {
+            console.error('Error during DELETE request:', error);
+        }
     };
 });
 

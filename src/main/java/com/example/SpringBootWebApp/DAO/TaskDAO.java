@@ -38,5 +38,14 @@ public class TaskDAO {
         }
     }
 
+    public void deleteUserTask(int userId, String taskContent) {
+        for(Task task : db) {
+            if(task.getTaskContent().equals(taskContent) && task.getUserId() == userId) {
+                db.remove(task);
+                break;
+            }
+        }
+    }
+
 
 }
