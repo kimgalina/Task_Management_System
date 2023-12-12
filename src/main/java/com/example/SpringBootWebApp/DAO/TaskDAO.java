@@ -29,7 +29,14 @@ public class TaskDAO {
         }
         return usersTask;
     }
-
+    public void editTaskContentByUser(int userId, String oldTaskContent, String newTaskContent) {
+        List<Task> usersTask = getTasksByUser(userId);
+        for(Task task : usersTask) {
+            if(task.getTaskContent().equals(oldTaskContent)) {
+                task.setTaskContent(newTaskContent);
+            }
+        }
+    }
 
 
 }

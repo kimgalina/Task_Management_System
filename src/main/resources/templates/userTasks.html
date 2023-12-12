@@ -200,12 +200,38 @@
                 }
             };
 
-            window.editTask = function (button) {
+            window.editTask = async function (button) {
                 const taskElement = button.parentElement;
                 const taskText = taskElement.querySelector("span").innerText;
                 const newText = prompt("Edit task:", taskText);
                 if (newText !== null) {
                     taskElement.querySelector("span").innerText = newText;
+                    // запрос на сервер для изменения таски
+                    try {
+                        const currentUrl = window.location.href;
+
+                        const updateUrl = `${currentUrl}/edit-task/${taskText}`;
+
+                        const formData = new FormData();
+                        formData.append('taskContent', newText);
+
+                        const response = await fetch(updateUrl, {
+                            method: 'PATCH',
+                            body: formData,
+                        });
+
+                        if (response.ok) {
+                            // Your code for a successful update
+                            console.log("OK patch");
+                        } else {
+                            // Your code for handling errors
+                            console.error('Failed to update task');
+                        }
+                    } catch (error) {
+                        console.error('Error during PATCH request:', error);
+                    }
+
+
                 }
             };
 

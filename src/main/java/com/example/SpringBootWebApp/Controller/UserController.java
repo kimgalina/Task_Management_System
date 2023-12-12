@@ -5,6 +5,7 @@ import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.Models.Task;
 import com.example.SpringBootWebApp.Models.User;
 import com.example.SpringBootWebApp.UserStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -89,5 +90,28 @@ public class UserController {
         model.addAttribute("tasks",taskDAO.getTasksByUser(userId));
         return "userTasks";
     }
+
+    @PatchMapping("/assign-task/{userId}/edit-task/{taskText}")
+    @ResponseBody
+    public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @PathVariable String taskText,
+                                               @RequestParam("taskContent") String taskNewText) {
+       // изменить таску с taskContent = taskText на taskContent = taskNewText
+        taskDAO.editTaskContentByUser(userId, taskText, taskNewText);
+
+        return ResponseEntity.ok("Task updated successfully");
+    }
+
+    @PatchMapping("/user/{userId}/edit-task/{taskText}")
+    @ResponseBody
+    public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @PathVariable String taskText,
+                                                        @RequestParam("taskContent") String taskNewText) {
+        // изменить таску с taskContent = taskText на taskContent = taskNewText
+        taskDAO.editTaskContentByUser(userId, taskText, taskNewText);
+
+        return ResponseEntity.ok("Task updated successfully");
+    }
+
+
+
 
 }
