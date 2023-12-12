@@ -27,8 +27,6 @@ public class UserController {
     public String createUser(@ModelAttribute("user") User newUser, @RequestParam("status") UserStatus status){
 
         newUser.setStatus(status);
-        System.out.println(newUser.getEmail() + " " + newUser.getFirstName() + " " + newUser.getLastName() + " " +
-                newUser.getPassword() + " " + newUser.getStatus());// check
         // когда пользователь добавляется в базу его полю id присваеивается занчение
         if(userDAO.addUser(newUser)) {
             return "redirect:/user/" + newUser.getId();
@@ -42,8 +40,6 @@ public class UserController {
         System.out.println("пришедший с формы user " + newUser.getFirstName() + " " + newUser.getStatus());
         User existedUser = userDAO.findUser(newUser);
         if(existedUser != null) {
-            System.out.println(existedUser.getEmail() + " " + existedUser.getFirstName() + " " + existedUser.getLastName() + " " +
-                    existedUser.getPassword() + " " + existedUser.getStatus() );// check
             return "redirect:/user/" + existedUser.getId();
         }
         return "redirect:/login";
@@ -52,12 +48,8 @@ public class UserController {
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
         model.addAttribute("user", user);
-//        List<Task> tasks = taskDAO.getTasksByUser(id);
-//        for(Task task : tasks){
-//            System.out.println(task.getTaskContent());
-//        }
         model.addAttribute("tasks",taskDAO.getTasksByUser(id));
-        System.out.println(user.getFirstName() + " " + user.getStatus());
+
         switch(user.getStatus()) {
             case WORKER :
                 return "worker";
@@ -76,7 +68,6 @@ public class UserController {
     @PostMapping("/user/{id}/new-task")
     public String createTask(@PathVariable int id, @RequestParam("taskContent") String taskContent) {
         // Ваш код обработки данных, например, сохранение задачи в базе данных
-        System.out.println("in new-task = " + taskContent);
         Task task = new Task(taskContent, id);
         taskDAO.addTask(task);
         // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
@@ -86,7 +77,6 @@ public class UserController {
     @PostMapping("/assign-task/{userId}/new-task")
     public String assignTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
         // Ваш код обработки данных, например, сохранение задачи в базе данных
-        System.out.println("in new-task = " + taskContent);
         Task task = new Task(taskContent, userId);
         taskDAO.addTask(task);
         // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
@@ -97,7 +87,6 @@ public class UserController {
     public String showUsersTasks(@PathVariable int userId,Model model) {
         model.addAttribute("user",userDAO.findById(userId));
         model.addAttribute("tasks",taskDAO.getTasksByUser(userId));
-        System.out.println("in get method");
         return "userTasks";
     }
 

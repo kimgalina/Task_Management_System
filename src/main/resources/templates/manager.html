@@ -66,28 +66,28 @@
 
                 </ul>
             </div>
-
-            <div class="todo-card">
-                <h1>To Do</h1>
-                <div class="input-field">
-                  <textarea placeholder="Enter your new todo"></textarea>
+            <div class="todo-card-center">
+                <div class="todo-card">
+                    <h1>To Do</h1>
+                    <div id="taskInput">
+                        <input type="text" id="newTaskText" placeholder="Enter task...">
+                        <button id="addTaskButton" onclick="addTask()">Add Task</button>
+                    </div>
+                    <div class="filter-options">
+                        <button onclick="filterTasks('all')">All Tasks</button>
+                        <button onclick="filterTasks('completed')">Completed Tasks</button>
+                        <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
+                    </div>
+                    <ul id="taskList">
+                        <li class="task" th:each="task : ${tasks}">
+                            <input type="checkbox" th:checked="${task.isDone()}">
+                            <span th:text="${task.getTaskContent()}"></span>
+                            <button onclick="editTask(this)">Edit</button>
+                            <button onclick="deleteTask(this)">Delete</button>
+                        </li>
+                    </ul>
                 </div>
-                
-                <div class="filter-options">
-                  <button onclick="filterTasks('all')">All Tasks</button>
-                  <button onclick="filterTasks('completed')">Completed Tasks</button>
-                  <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
-                </div>
-          
-                <ul class="todoLists">
-                    <li th:each="task : ${tasks}" th:text="${task.getTaskContent()}"></li>
-                </ul>
-          
-                <div class="pending-tasks">
-                    <span>You have <span class="pending-num"> no </span> tasks pending.</span>
-            </div>
-            
-        </div>
+           </div>
     </div>
 </div>
     <script src="scripts/script.js"></script>
