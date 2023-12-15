@@ -1,15 +1,17 @@
 package com.example.SpringBootWebApp.Models;
 
 public class Task {
+    public static int TASK_COUNT = 0;
+    private int id;
     private String taskContent;
-    private String deadline;
-    private boolean isFavorite;
+//    private String deadline;
     private boolean isDone;
     private int userId;
 
-    private String taskStatus; //"in progress" "closed"
+//    private String taskStatus;
 
     public Task(String taskContent, int userId) {
+        TASK_COUNT++;
         this.taskContent = taskContent;
         this.userId = userId;
     }
@@ -19,22 +21,6 @@ public class Task {
 
     public void setTaskContent(String taskContent) {
         this.taskContent = taskContent;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
     }
 
     public boolean isDone() {
@@ -52,12 +38,7 @@ public class Task {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+    public int getId() { return id; }
 
-    public String getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(String taskStatus) {
-        this.taskStatus = taskStatus;
-    }
+    public void setId(int id) { this.id = id; }
 }

@@ -4,13 +4,10 @@ import com.example.SpringBootWebApp.DAO.TaskDAO;
 import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.Models.Task;
 import com.example.SpringBootWebApp.Models.User;
-import com.example.SpringBootWebApp.UserStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -25,8 +22,8 @@ public class UserController {
     }
 
     @PostMapping("/create-user")
-    public String createUser(@ModelAttribute("user") User newUser, @RequestParam("status") UserStatus status){
-
+    public String createUser(@ModelAttribute("user") User newUser, @RequestParam("status") String status){
+        status = status.toLowerCase();
         newUser.setStatus(status);
         // когда пользователь добавляется в базу его полю id присваеивается занчение
         if(userDAO.addUser(newUser)) {
@@ -38,7 +35,7 @@ public class UserController {
 
     @PostMapping("/login-user")
     public String login(@ModelAttribute("user") User newUser){
-        System.out.println("пришедший с формы user " + newUser.getFirstName() + " " + newUser.getStatus());
+        System.out.println("пришедший с формы user " + newUser.getFirstName() + " " + newUser.getPassword());
         User existedUser = userDAO.findUser(newUser);
         if(existedUser != null) {
             return "redirect:/user/" + existedUser.getId();
@@ -52,12 +49,12 @@ public class UserController {
         model.addAttribute("tasks",taskDAO.getTasksByUser(id));
 
         switch(user.getStatus()) {
-            case WORKER :
+            case "worker" :
                 return "worker";
-            case MANAGER:
+            case "manager":
                 model.addAttribute("workers",userDAO.getAllWorkers());
                 return "manager";
-            case DIRECTOR:
+            case "director":
                 model.addAttribute("workers",userDAO.getAllWorkers());
                 model.addAttribute("managers",userDAO.getAllManagers());
                 return "director";
@@ -66,13 +63,13 @@ public class UserController {
     }
 
 
-    @PostMapping("/user/{id}/new-task")
-    public String createTask(@PathVariable int id, @RequestParam("taskContent") String taskContent) {
+    @PostMapping("/user/{userId}/new-task")
+    public String createTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
         // Ваш код обработки данных, например, сохранение задачи в базе данных
-        Task task = new Task(taskContent, id);
+        Task task = new Task(taskContent, userId);
         taskDAO.addTask(task);
         // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
-        return "redirect:/user/" + id ; //
+        return "redirect:/user/" + userId ; //
     }
 
     @PostMapping("/assign-task/{userId}/new-task")
@@ -94,8 +91,8 @@ public class UserController {
     @PatchMapping("/assign-task/{userId}/edit-task")
     @ResponseBody
     public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
-                                               @RequestParam("taskNewContent") String taskNewText) {
-       // изменить таску с taskContent = taskText на taskContent = taskNewText
+                                                        @RequestParam("taskNewContent") String taskNewText) {
+        // изменить таску с taskContent = taskText на taskContent = taskNewText
         taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 
         return ResponseEntity.ok("Task updated successfully");
@@ -104,7 +101,7 @@ public class UserController {
     @PatchMapping("/user/{userId}/edit-task")
     @ResponseBody
     public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
-                                                        @RequestParam("taskNewContent") String taskNewText) {
+                                                     @RequestParam("taskNewContent") String taskNewText) {
         // изменить таску с taskContent = taskText на taskContent = taskNewText
         taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 

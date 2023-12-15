@@ -1,16 +1,13 @@
 package com.example.SpringBootWebApp.Models;
 
 import com.example.SpringBootWebApp.DAO.TaskDAO;
-import com.example.SpringBootWebApp.DAO.UserDAO;
-import com.example.SpringBootWebApp.UserStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
 import java.util.List;
 
 public class User {
+    public static int USER_COUNT = 6;
     private int id;
-    private UserStatus status;
+    private String status;
 
     private String firstName;
     private String lastName;
@@ -19,14 +16,13 @@ public class User {
     private String email;
     private String phoneNumber;
 
-    private File photo;
 
 
     public User() {
-
+        USER_COUNT++;
     }
 
-    public User(String firstName, String lastName, UserStatus status, String password, int id) {
+    public User(String firstName, String lastName, String status, String password, int id) {
         this.firstName = firstName;
         this.status = status;
         this.lastName = lastName;
@@ -39,7 +35,7 @@ public class User {
         return id;
     }
 
-    public UserStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -63,15 +59,12 @@ public class User {
         return phoneNumber;
     }
 
-    public File getPhoto() {
-        return photo;
-    }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -95,9 +88,6 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setPhoto(File photo) {
-        this.photo = photo;
-    }
 
     public List<Task> getUserTasks() {
         return TaskDAO.getTasksByUser(id);
