@@ -2,116 +2,118 @@
 <html lang="en">
 
 <head>
+    <!-- Meta tags for character set and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <!-- Подключение стилей Unicons -->
+    <!-- Link to Unicons icon library styles -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
 
-    <!-- Подключение локальных стилей из файла manager.css -->
+    <!-- Link to local styles from the manager.css file -->
     <link rel="stylesheet" href="styles/manager.css">
 </head>
 
 <body>
     <div class="container">
-        <!-- Навигационная панель -->
+        <!-- Navigation panel -->
         <nav class="nav">
             <ul class="nav-items">
-                <!-- Кнопка открытия модального окна "My Information" -->
+                <!-- Button to open the "My Information" modal -->
                 <li class="nav-item">
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
-                <!-- Ссылка "Sign Out" -->
+                <!-- "Sign Out" link -->
                 <li class="nav-item">
                     <a href="#" onclick="redirectToSignIn()">Sign Out</a>
                 </li>
             </ul>
         </nav>
 
-        <!-- Модальное окно -->
+        <!-- Modal window -->
         <div class="modal" id="my-modal">
             <div class="modal__box">
-                <!-- Кнопка закрытия модального окна -->
+                <!-- Close button for the modal -->
                 <button class="modal__close-btn" id="close-my-modal-btn">
+                    <!-- Close icon SVG -->
                     <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
                             fill="#333333" />
                         <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
                     </svg>
                 </button>
-                <!-- Информация о пользователе в модальном окне -->
+                <!-- User information in the modal -->
                 <div class="modal-info">
-                    <!-- Изображение пользователя -->
+                    <!-- User image -->
                     <div class="modal-img">
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
-                    <!-- Данные пользователя -->
+                    <!-- User data -->
                     <div class="modal-personInfo">
-                        <!-- Имя пользователя -->
+                        <!-- User's first name -->
                         <div class="modal-info-input">
                             <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span><span class="text">Qwerty Qwerty</span></p>
                             <button class="edit">&#9998;</button>
                         </div>
-                        <!-- Email пользователя -->
+                        <!-- User's email -->
                         <div class="modal-info-input">
                             <p th:text="${user.getEmail()}"><span style="font-weight: 600;">Email: </span> <span class="text">qwerty@gmail.com</span></p>
                             <button class="edit">&#9998;</button>
                         </div>
-                        <!-- Номер телефона пользователя -->
+                        <!-- User's phone number -->
                         <div class="modal-info-input">
                             <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span><span class="text">+996 XXX XXX XXX</span></p>
                             <button class="edit">&#9998;</button>
                         </div>
-                        <!-- Статус пользователя -->
+                        <!-- User's status -->
                         <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Worker</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Приветствие пользователя -->
+        <!-- User welcome title -->
         <div class="welcome-title">
-            <h1 th:text="${'Welcome back , ' + user.getFirstName()}">Welcome back, Manager!</h1>
+            <h1 th:text="${'Welcome back, ' + user.getFirstName()}">Welcome back, Manager!</h1>
         </div>
 
-        <!-- Карточки задач -->
+        <!-- Task cards -->
         <div class="todo-card-center">
-            <!-- Карточка "List of Workers" -->
+            <!-- "List of Workers" card -->
             <div class="todo-card">
                 <h1>List of Workers</h1>
-                <!-- Список работников -->
+                <!-- Workers list -->
                 <ul class="todo-card-workers">
                     <li th:each="worker : ${workers}" class="open-todo-btn">
-                        <!-- Ссылка на страницу задачи для работника -->
+                        <!-- Link to the worker's task page -->
                         <a th:href="@{'/assign-task/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
                     </li>
                 </ul>
             </div>
 
-            <!-- Карточка "To Do" -->
+            <!-- "To Do" card -->
             <div class="todo-card-center">
                 <div class="todo-card">
                     <h1>To Do</h1>
-                    <!-- Форма для добавления новой задачи -->
+                    <!-- Form to add a new task -->
                     <div id="taskInput">
                         <input type="text" id="newTaskText" placeholder="Enter task...">
                         <button id="addTaskButton" onclick="addTask()">Add Task</button>
                     </div>
-                    <!-- Кнопки фильтрации задач -->
+                    <!-- Task filter buttons -->
                     <div class="filter-options">
                         <button onclick="filterTasks('all')">All Tasks</button>
                         <button onclick="filterTasks('completed')">Completed Tasks</button>
                         <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                     </div>
-                    <!-- Список задач -->
+                    <!-- Task list -->
                     <ul id="taskList">
                         <li class="task" th:each="task : ${tasks}">
-                            <!-- Чекбокс для отметки выполнения задачи -->
+                            <!-- Checkbox for task completion -->
                             <input type="checkbox" id="taskCheckbox" th:checked="${task.isDone()}" onchange="updateTaskStatus(this)">
-                            <!-- Текст задачи -->
+                            <!-- Task text -->
                             <span th:text="${task.getTaskContent()}"></span>
-                            <!-- Кнопки для редактирования и удаления задачи -->
+                            <!-- Buttons for editing and deleting tasks -->
                             <button onclick="editTask(this)">Edit</button>
                             <button onclick="deleteTask(this)">Delete</button>
                         </li>
@@ -120,7 +122,7 @@
             </div>
         </div>
     </div>
-    <!-- Подключение скрипта для клиентской логики -->
+    <!-- Script inclusion for client-side logic -->
     <script src="scripts/script.js"></script>
 </body>
 

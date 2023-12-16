@@ -2,43 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Установка кодировки и параметров масштабирования для мобильных устройств -->
+    <!-- Set encoding and viewport parameters for mobile devices -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Подключение стилей Font Awesome для иконок -->
+    <!-- Link to Font Awesome styles for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    <!-- Заголовок страницы -->
+    <!-- Page title -->
     <title>Sign UP</title>
 
-    <!-- Подключение локальных стилей из файла style.css -->
+    <!-- Link to local styles from the style.css file -->
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
-    <!-- Контейнер с формой для регистрации пользователя -->
+    <!-- Container with a form for user registration -->
     <div class="container">
-        <!-- Форма для отправки данных пользователя на сервер -->
+        <!-- Form for sending user data to the server -->
         <form th:method="POST" th:action="@{/create-user}" th:object="${user}">
-            <!-- Заголовок формы -->
+            <!-- Form title -->
             <h1>Sign Up</h1>
 
-            <!-- Поле ввода для имени пользователя -->
+            <!-- Input field for user first name -->
             <div class="input-box">
                 <input type="text" placeholder="FirstName" required maxlength="10" autofocus  name="firstName">
-                <!-- Иконка пользователя Font Awesome -->
+                <!-- Font Awesome user icon -->
                 <i class="fa-solid fa-user"></i>
             </div>
 
-            <!-- Поле ввода для фамилии пользователя -->
+            <!-- Input field for user last name -->
             <div class="input-box">
                 <input type="text" placeholder="LastName" required maxlength="10" autofocus name="lastName">
-                <!-- Иконка пользователя Font Awesome -->
+                <!-- Font Awesome user icon -->
                 <i class="fa-solid fa-user"></i>
             </div>
 
-            <!-- Поле выбора статуса пользователя -->
+            <!-- Dropdown for selecting user status -->
             <div class="input-box">
                 <label for="status">Status:</label>
                 <select id="status" name="status" required>
@@ -48,47 +48,47 @@
                 </select>
             </div>
 
-            <!-- Поле ввода для электронной почты пользователя -->
+            <!-- Input field for user email -->
             <div class="input-box">
                 <input type="email" placeholder="Email" required name="email">
-                <!-- Иконка почтового конверта Font Awesome -->
+                <!-- Font Awesome envelope icon -->
                 <i class="fa-solid fa-envelope"></i>
             </div>
 
-            <!-- Поле ввода для пароля пользователя -->
+            <!-- Input field for user password -->
             <div class="input-box">
                  <input type="password" placeholder="Password" required maxlength="8" name="password">
-                <!-- Иконка замка Font Awesome -->
+                <!-- Font Awesome lock icon -->
                 <i class="fa-solid fa-lock"></i>
             </div>
 
-            <!-- Поле ввода для подтверждения пароля пользователя -->
+            <!-- Input field for confirming user password -->
             <div class="input-box">
                 <input type="password" placeholder="Confirm Password" required maxlength="8" name="confirm-password">
-                <!-- Иконка замка Font Awesome -->
+                <!-- Font Awesome lock icon -->
                 <i class="fa-solid fa-lock"></i>
             </div>
 
-            <!-- Кнопка для отправки формы -->
+            <!-- Button to submit the form -->
             <button type="submit" class="btn">Sign Up</button>
 
-            <!-- Ссылка для перехода на страницу входа -->
+            <!-- Link to navigate to the login page -->
             <div class="sign-in sign-up-link">
                 <p>Already have an account? <a href="#" onclick="redirectToSignIn()">Sign In</a></p>
             </div> 
         </form>
     </div>
 
-    <!-- Сценарий JavaScript для переадресации на страницу входа -->
+    <!-- JavaScript script for redirecting to the login page -->
     <script>
         function redirectToSignIn() {
-            // Получаем текущий путь
+            // Get the current path
             var currentPath = window.location.pathname;
 
-            // Добавляем "/signup" к текущему пути и переносимся на уровень вверх (..)
+            // Add "/signup" to the current path and navigate up one level (..)
             var loginPath = currentPath.replace("/registration", "/login");
 
-            // Перенаправляем пользователя
+            // Redirect the user
             window.location.href = loginPath;
         }
     </script>

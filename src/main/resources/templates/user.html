@@ -2,71 +2,71 @@
 <html lang="en">
 
 <head>
-    <!-- Установка кодировки и параметров масштабирования для мобильных устройств -->
+    <!-- Set encoding and viewport parameters for mobile devices -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Заголовок страницы -->
+    <!-- Page title -->
     <title>Document</title>
 
-    <!-- Подключение стилей для иконок из библиотеки Unicons -->
+    <!-- Link to styles for icons from Unicons library -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 
-    <!-- Подключение локальных стилей из файла worker.css -->
+    <!-- Link to local styles from worker.css file -->
     <link rel="stylesheet" href="styles/worker.css">
 </head>
 
 <body>
-    <!-- Контейнер для содержимого страницы -->
+    <!-- Container for the page content -->
     <div class="container">
 
-        <!-- Навигационное меню -->
+        <!-- Navigation menu -->
         <nav class="nav">
             <ul class="nav-items">
-                <!-- Элемент меню: открытие модального окна с информацией пользователя -->
+                <!-- Menu item: open modal window with user information -->
                 <li class="nav-item">
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
 
-                <!-- Элемент меню: выход из аккаунта -->
+                <!-- Menu item: log out -->
                 <li class="nav-item">
                     <a href="#" onclick="redirectToSignIn()">Sign Out</a>
                 </li>
             </ul>
         </nav>
 
-        <!-- Заголовок приветствия с именем пользователя и словом "tasks" -->
+        <!-- Welcome title with the user's name and the word "tasks" -->
         <div class="welcome-title">
             <h1 th:text="${user.getFirstName() + ' tasks'}">Worker's tasks</h1>
         </div>
 
-        <!-- Центральная часть страницы с карточкой задач -->
+        <!-- Central part of the page with the task card -->
         <div class="todo-card-center">
-            <!-- Карточка задач -->
+            <!-- Task card -->
             <div class="todo-card">
 
-                <!-- Заголовок карточки: "To Do" -->
+                <!-- Card title: "To Do" -->
                 <h1>To Do</h1>
 
-                <!-- Поле ввода для новой задачи -->
+                <!-- Input field for a new task -->
                 <div class="input-field">
                     <textarea placeholder="Enter your new todo"></textarea>
                 </div>
 
-                <!-- Панель фильтрации задач -->
+                <!-- Task filtering panel -->
                 <div class="filter-options">
                     <button onclick="filterTasks('all')">All Tasks</button>
                     <button onclick="filterTasks('completed')">Completed Tasks</button>
                     <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
 
-                <!-- Список задач -->
+                <!-- List of tasks -->
                 <ul class="todoLists">
-                    <!-- Итерация по задачам и вывод их содержимого -->
+                    <!-- Iterate through tasks and display their content -->
                     <li th:each="task : ${tasks}" th:text="${task.getTaskContent()}"></li>
                 </ul>
 
-                <!-- Информация о невыполненных задачах -->
+                <!-- Information about pending tasks -->
                 <div class="pending-tasks">
                     <span>You have <span class="pending-num"> no </span> tasks pending.</span>
                 </div>
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <!-- Подключение скрипта JavaScript из файла worker.js -->
+    <!-- Link to the JavaScript script from worker.js file -->
     <script src="scripts/worker.js"></script>
 </body>
 
