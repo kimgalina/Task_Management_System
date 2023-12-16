@@ -3,12 +3,15 @@
 ## Table of Contents:
 1. [Introduction](#introduction)
 2. [Features](#features)
-3. [Requirements](#requirements)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [How to Use](#how-to-use)
-7. [Code Structure](#code-structure)
-8. [Authors](#authors)
+3. [Key Functionalities](#key-functionalities)
+4. [Requirements](#requirements)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [How to Use](#how-to-use)
+8. [Code Structure](#code-structure)
+9. [Authors](#authors)
+10. [Screenshots](#screenshots)
+11. [Commit History](#commit-history)
 
 ## Introduction
 The Task Management System is a comprehensive web application built with Spring Boot, a relational database, and front-end markup. It provides a platform for efficient task management within an organization, featuring different account types such as worker, manager, and director.
@@ -19,6 +22,37 @@ The Task Management System is a comprehensive web application built with Spring 
 - Role-based access control
 - Database integration for persistent data storage
 - Responsive front-end design
+
+## Key Functionalities
+1. **User Authentication:**
+   - Implement a secure authentication system to allow users (workers, managers, and directors) to log in with their credentials.
+
+2. **Task Creation:**
+   - Enable users, particularly managers and directors, to create tasks by providing detailed descriptions and specifying relevant details such as due dates.
+
+3. **Task Assignment:**
+   - Implement the functionality to assign tasks to specific workers, allowing managers and directors to distribute workload efficiently.
+
+4. **Role-Based Access Control:**
+   - Set up role-based access control to ensure that each user has access only to features and data relevant to their role (worker, manager, or director).
+
+5. **Task Tracking:**
+   - Provide a mechanism for tracking the status and progress of tasks, allowing workers, managers, and directors to monitor ongoing activities.
+
+6. **Database Integration:**
+   - Integrate a relational database (e.g., MySQL, PostgreSQL) to persistently store user account information, task details, and other relevant data.
+
+7. **Responsive Front-End Design:**
+   - Implement a responsive and user-friendly front-end design to ensure a seamless user experience across different devices and screen sizes.
+
+8. **Documentation:**
+   - Create comprehensive documentation for developers, including setup instructions, API documentation, and any other relevant information needed for future maintenance.
+
+9. **Logging and Auditing:**
+   - Implement logging mechanisms to record user actions and changes in the system. This is essential for tracking system behavior and troubleshooting.
+
+10. **Error Handling:**
+   - Develop robust error-handling mechanisms to gracefully manage unexpected scenarios, providing meaningful error messages to users and logging errors for system administrators.
 
 ## Requirements
 - Java Development Kit (JDK) 8 or higher
@@ -39,19 +73,19 @@ The Task Management System is a comprehensive web application built with Spring 
 
 ## How to Use
 1. **Account Types:**
-    - Worker: Manages and completes assigned tasks.
-    - Manager: Creates tasks, assigns them to workers, and monitors progress.
-    - Director: Has access to overall task and account management.
+   - Worker: Manages and completes assigned tasks.
+   - Manager: Creates tasks, assigns them to workers, and monitors progress.
+   - Director: Has access to overall task and account management.
 
 2. **Task Management:**
-    - Create tasks with detailed descriptions.
-    - Assign tasks to specific workers or leave unassigned for managers to distribute.
-    - Track task status and completion.
+   - Create tasks with detailed descriptions.
+   - Assign tasks to specific workers or leave unassigned for managers to distribute.
+   - Track task status and completion.
 
 3. **Role-Based Access:**
-    - Workers can view and manage their tasks.
-    - Managers can create tasks, assign them, and monitor progress.
-    - Directors have access to all aspects of task and account management.
+   - Workers can view and manage their tasks.
+   - Managers can create tasks, assign them, and monitor progress.
+   - Directors have access to all aspects of task and account management.
 
 ## Code Structure
 The project follows a modular structure to enhance maintainability and readability. Key classes include:
@@ -61,9 +95,10 @@ The project follows a modular structure to enhance maintainability and readabili
 - **Repository:** Manages data access and database interactions.
 
 ## Authors
-1. [Galina Kim](https://t.me/genriettakim)
-2. [Kylychbek Parpiev](https://t.me/vkusnoochennn)
-3. [Isa Kasymbek uulu](https://t.me/jes_sues)
+1. [Galina Kim](https://t.me/genriettakim) - Backend development lead.
+2. [Kylychbek Parpiev](https://t.me/vkusnoochennn) - Front-end development lead.
+3. [Isa Kasymbek uulu](https://t.me/jes_sues) - Database management lead.
+
 
 ## Team Members
 1. **Kylychbek Parpiev**
@@ -147,6 +182,43 @@ Maintain a detailed commit history, starting from more than 1 week before the su
 | 33ec434 | @kimgalina | Tue Dec 5 12:28:32 2023 +0600 | changes |
 | d982daf | @kimgalina | Mon Dec 4 16:03:04 2023 +0600 | template for application |
 | 1ffb5f7 | @kimgalina | Mon Dec 4 15:46:46 2023 +0600 | Initial commit |
-                                          
 
-Contributions and feedback are appreciated. Feel free to open issues or submit pull requests.
+
+## Commit History
+
+### Dec 16, 2023
+- Merged changes from 'dev' branch into main.
+- Added English documentation.
+- Made some changes and added frontend documentation.
+- Added documentation and made some changes.
+
+### Dec 15, 2023
+- Added database functionality.
+
+### Dec 13, 2023
+- Added DELETE request handlers.
+
+### Dec 12, 2023
+- Added PATCH request handlers.
+- Released the first working version of the project.
+- Fixed a bug on the front-end.
+- Deleted unusable files.
+
+### Dec 11, 2023
+- Fixed bugs.
+- Created a user todo page.
+- Enabled directors and managers to assign tasks to others.
+- Created options to change information and fixed bugs.
+- Added a new class Task, implemented a function in JS for sending post requests to the server, and added a post method handler.
+- Added dynamic lists of managers and workers.
+- Fixed a bug.
+- Added a method for processing sign-in, sign-up, and registration.
+- Added a chooser for status on the front-end, UserController, RegistrationController, and LoginController.
+
+### Dec 10, 2023
+- Changed the location of front-end files.
+- Created a director page.
+
+## GitHub Link
+[Task Management System GitHub Repository](https://github.com/kimgalina/Task_Management_System)
+
