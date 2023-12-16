@@ -94,6 +94,77 @@ public class TaskDAO {
     }
 
     /**
+     * Filters tasks based on the specified criteria and returns the filtered list.
+     *
+     * @param userId      An integer representing the user ID for whom tasks need to be filtered.
+     * @param filterType  A string specifying the type of filter to be applied ("all", "completed", or "uncompleted").
+     * @return            A list of tasks that satisfy the specified filter criteria.
+     */
+    public List<Task> filterTasks(int userId, String filterType) {
+        List<Task> allUsersTasks = getTasksByUser(userId);
+
+        // Switch statement to apply different filters based on filterType
+        switch (filterType) {
+            case "all":
+                return allUsersTasks;
+            case "completed":
+                System.out.println("Begin filter by completed");
+                for (int i = 0; i < allUsersTasks.size(); i++) {
+                    if (!allUsersTasks.get(i).isDone()) {
+                        allUsersTasks.remove(i);
+                        i--;
+                    }
+                }
+                return allUsersTasks;
+            case "uncompleted":
+                System.out.println("Begin filter by uncompleted");
+                for (int i = 0; i < allUsersTasks.size(); i++) {
+                    if (allUsersTasks.get(i).isDone()) {
+                        allUsersTasks.remove(i);
+                        i--;
+                    }
+                }
+                return allUsersTasks;
+        }
+
+        // If the filterType is not recognized, print an error message
+        System.out.println("FORMAT FILTER IS NOT RECOGNIZED !!!!");
+        return null;
+    }
+
+    /**
+     * Changes the status of a task for a given user.
+     *
+     * @param userId      An integer representing the user ID for whom the task status needs to be updated.
+     * @param taskContent A string representing the content of the task for which the status needs to be updated.
+     * @param isDone      A boolean value indicating the new status of the task (true for completed, false for uncompleted).
+     */
+    public void changeTaskStatus(int userId, String taskContent, boolean isDone) {
+        try {
+            // SQL update statement to change the task status in the database
+            String updateSQL = "UPDATE Tasks SET is_done = ? WHERE user_id = ? AND task_content = ?";
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
+                updateStatement.setBoolean(1, isDone);
+                updateStatement.setInt(2, userId);
+                updateStatement.setString(3, taskContent);
+
+                int rowsAffected = updateStatement.executeUpdate();
+
+                // Print a message indicating the success or failure of the task status update
+                if (rowsAffected > 0) {
+                    System.out.println("Task status successfully updated");
+                } else {
+                    System.out.println("Task status NOT updated. Error occurred.");
+                }
+            }
+        } catch (SQLException e) {
+            // Throw a runtime exception if there is an issue with the SQL operation
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
      * Edits the content of a task for a specific user in the database.
      *
      * @param userId The ID of the user.
