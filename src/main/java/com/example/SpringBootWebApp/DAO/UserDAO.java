@@ -1,3 +1,13 @@
+/**
+ * The `UserDAO` class is responsible for interacting with the database to perform CRUD operations
+ * related to user management. It uses PostgreSQL as the underlying database and is designed as a
+ * Spring component.
+ *
+ * This class provides methods for adding, retrieving, and finding users in the database, as well
+ * as obtaining lists of workers and managers. Additionally, it includes static initialization to
+ * set up the database connection during class loading.
+ */
+
 package com.example.SpringBootWebApp.DAO;
 
 import com.example.SpringBootWebApp.Models.User;
@@ -9,9 +19,13 @@ import java.util.List;
 
 @Component
 public class UserDAO {
-    private static int USER_COUNT;
+
     private static Connection connection;
 
+    /**
+     * Static block to initialize the PostgreSQL JDBC driver and establish a database connection.
+     * It throws a runtime exception if any issues occur during the initialization process.
+     */
     static {
         try {
             Class.forName("org.postgresql.Driver");
@@ -25,10 +39,13 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-    public UserDAO() {
-        USER_COUNT = User.USER_COUNT;
-    }
 
+    /**
+     * Adds a new user to the database.
+     *
+     * @param user The user to be added.
+     * @return `true` if the user is successfully added; otherwise, `false`.
+     */
     public boolean addUser(User user) {
         try {
             String SQL = "INSERT INTO Users (status, first_name, last_name, password, email, phone_number) VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
@@ -55,7 +72,12 @@ public class UserDAO {
         return true;
     }
 
-
+    /**
+     * Retrieves a user by their ID from the database.
+     *
+     * @param id The ID of the user.
+     * @return The user with the specified ID; `null` if not found.
+     */
     public User findById(int id) {
         User user = null;
 
@@ -84,6 +106,12 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * Finds a user in the database based on the provided user's first name and password.
+     *
+     * @param user The user with first name and password for searching.
+     * @return The found user; `null` if not found or password doesn't match.
+     */
     public User findUser(User user) {
         User result = null;
 
@@ -115,7 +143,11 @@ public class UserDAO {
         return result;
     }
 
-
+    /**
+     * Retrieves a list of all workers from the database.
+     *
+     * @return A list of worker users.
+     */
     public List<User> getAllWorkers() {
         List<User> workers = new ArrayList<>();
 
@@ -126,16 +158,16 @@ public class UserDAO {
 
             while(resultSet.next()) {
                 if(resultSet.getString("status").equals("worker")) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setStatus(resultSet.getString("status"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setPassword(resultSet.getString("password"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPhoneNumber(resultSet.getString("phone_number"));
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setStatus(resultSet.getString("status"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPhoneNumber(resultSet.getString("phone_number"));
 
-                workers.add(user);
+                    workers.add(user);
                 }
             }
         } catch (SQLException e) {
@@ -144,6 +176,12 @@ public class UserDAO {
 
         return workers;
     }
+
+    /**
+     * Retrieves a list of all managers from the database.
+     *
+     * @return A list of manager users.
+     */
     public List<User> getAllManagers() {
         List<User> managers = new ArrayList<>();
         try {
