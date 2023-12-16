@@ -4,10 +4,13 @@ import com.example.SpringBootWebApp.DAO.TaskDAO;
 import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.Models.Task;
 import com.example.SpringBootWebApp.Models.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -61,7 +64,11 @@ public class UserController {
         }
         return null;
     }
-
+    @GetMapping("/user/{userId}/filter-tasks")
+    public ResponseEntity<List<Task>> filterUserTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
+        List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
+        return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
+    }
 
     @PostMapping("/user/{userId}/new-task")
     public String createTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
@@ -78,6 +85,28 @@ public class UserController {
         taskDAO.addTask(task);
         // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
         return "redirect:/registration"; //
+    }
+
+    @GetMapping("/assign-task/{userId}/filter-tasks")
+    public ResponseEntity<List<Task>> filterSomeoneTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
+        List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
+        return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
+    }
+
+    @PatchMapping("/user/{userId}/updateTaskStatus")
+    @ResponseBody
+    public ResponseEntity<String> changeMyTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
+                                                     @RequestParam("isDone") boolean isDone) {
+        taskDAO.changeTaskStatus(userId, taskContent, isDone);
+        return ResponseEntity.ok("Changed task Status successfully");
+    }
+
+    @PatchMapping("/assign-task/{userId}/updateTaskStatus")
+    @ResponseBody
+    public ResponseEntity<String> changeSomeoneTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
+                                                     @RequestParam("isDone") boolean isDone) {
+        taskDAO.changeTaskStatus(userId, taskContent, isDone);
+        return ResponseEntity.ok("Changed task Status successfully");
     }
 
     @GetMapping("/assign-task/{userId}")

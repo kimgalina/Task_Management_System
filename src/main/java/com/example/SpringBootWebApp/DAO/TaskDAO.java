@@ -6,6 +6,9 @@
  * This class provides methods for adding, retrieving, editing, and deleting tasks in the database.
  * Additionally, it includes static initialization to set up the database connection during class
  * loading.
+ *
+ * @author [Your Name]
+ * @version 1.0
  */
 
 package com.example.SpringBootWebApp.DAO;
