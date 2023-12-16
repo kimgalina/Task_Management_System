@@ -1,38 +1,30 @@
-//
-//
-//
-// // Добавление обработчиков событий для редактирования текста
-// const edit = document.querySelectorAll('.edit');
-// const text = document.querySelectorAll('.text');
-//
-//
-// for (let i = 0; i < edit.length; i++) {
-//   let editMode = false;
-//
-//   edit[i].addEventListener('click', function(){
-//     if( editMode) {
-//       this.innerHTML = "&#9998;";
-//       text[i].removeAttribute('contentEditable');
-//     } else {
-//       this.textContent = "OK";
-//       text[i].setAttribute('contentEditable', true);
-//       text[i].focus();
-//     }
-//     editMode = !editMode;
-//
-//   });
-//
-//
-//   text[i].addEventListener('keydown', function (event) {
-//     if (event.key === 'Enter') {
-//       event.preventDefault();
-//       edit[i].click();
-//     }
-//   });
-// }
-
-
 document.addEventListener("DOMContentLoaded", function () {
+  const openModalBtn = document.getElementById("open-modal-btn");
+  const closeModalBtn = document.getElementById("close-my-modal-btn");
+  const modal = document.getElementById("my-modal");
+  function openModal() {
+    console.log("Opening modal");
+    modal.classList.add("open");
+  }
+
+  function closeModal() {
+    console.log("Closing modal");
+    modal.classList.remove("open");
+  }
+
+  openModalBtn.addEventListener("click", openModal);
+  closeModalBtn.addEventListener("click", closeModal);
+
+  modal.querySelector(".modal__box").addEventListener("click", (event) => {
+    console.log("Inside modal box");
+    event.stopPropagation();
+  });
+
+  modal.addEventListener("click", () => {
+    console.log("Inside modal");
+    closeModal();
+  });
+
   const taskList = document.getElementById("taskList");
   const newTaskTextElement = document.getElementById("newTaskText");
 
@@ -158,5 +150,6 @@ function redirectToSignIn() {
   // Перенаправляем пользователя
   window.location.href =loginPath;
 }
+
 
 

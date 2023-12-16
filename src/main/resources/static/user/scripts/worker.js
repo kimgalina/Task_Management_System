@@ -1,5 +1,30 @@
-
 document.addEventListener("DOMContentLoaded", function () {
+    const openModalBtn = document.getElementById("open-modal-btn");
+    const closeModalBtn = document.getElementById("close-my-modal-btn");
+    const modal = document.getElementById("my-modal");
+    function openModal() {
+        console.log("Opening modal");
+        modal.classList.add("open");
+    }
+
+    function closeModal() {
+        console.log("Closing modal");
+        modal.classList.remove("open");
+    }
+
+    openModalBtn.addEventListener("click", openModal);
+    closeModalBtn.addEventListener("click", closeModal);
+
+    modal.querySelector(".modal__box").addEventListener("click", (event) => {
+        console.log("Inside modal box");
+        event.stopPropagation();
+    });
+
+    modal.addEventListener("click", () => {
+        console.log("Inside modal");
+        closeModal();
+    });
+
     const taskList = document.getElementById("taskList");
     const newTaskTextElement = document.getElementById("newTaskText");
 
