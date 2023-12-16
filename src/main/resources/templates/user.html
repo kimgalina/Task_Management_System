@@ -1,56 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Установка кодировки и параметров масштабирования для мобильных устройств -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Заголовок страницы -->
     <title>Document</title>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+
+    <!-- Подключение стилей для иконок из библиотеки Unicons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+    <!-- Подключение локальных стилей из файла worker.css -->
     <link rel="stylesheet" href="styles/worker.css">
 </head>
+
 <body>
+    <!-- Контейнер для содержимого страницы -->
     <div class="container">
 
+        <!-- Навигационное меню -->
         <nav class="nav">
             <ul class="nav-items">
+                <!-- Элемент меню: открытие модального окна с информацией пользователя -->
                 <li class="nav-item">
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
+
+                <!-- Элемент меню: выход из аккаунта -->
                 <li class="nav-item">
                     <a href="#" onclick="redirectToSignIn()">Sign Out</a>
                 </li>
             </ul>
         </nav>
 
+        <!-- Заголовок приветствия с именем пользователя и словом "tasks" -->
         <div class="welcome-title">
-            <h1 th:text="${user.getFirstName() + ' tasks'}" >Worker's tasks</h1>
+            <h1 th:text="${user.getFirstName() + ' tasks'}">Worker's tasks</h1>
         </div>
 
+        <!-- Центральная часть страницы с карточкой задач -->
         <div class="todo-card-center">
+            <!-- Карточка задач -->
             <div class="todo-card">
+
+                <!-- Заголовок карточки: "To Do" -->
                 <h1>To Do</h1>
+
+                <!-- Поле ввода для новой задачи -->
                 <div class="input-field">
-
-                  <textarea placeholder="Enter your new todo"></textarea>
+                    <textarea placeholder="Enter your new todo"></textarea>
                 </div>
 
-                
+                <!-- Панель фильтрации задач -->
                 <div class="filter-options">
-                  <button onclick="filterTasks('all')">All Tasks</button>
-                  <button onclick="filterTasks('completed')">Completed Tasks</button>
-                  <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
+                    <button onclick="filterTasks('all')">All Tasks</button>
+                    <button onclick="filterTasks('completed')">Completed Tasks</button>
+                    <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
-          
+
+                <!-- Список задач -->
                 <ul class="todoLists">
-                    <li th:each="task : ${tasks}"  th:text="${task.getTaskContent()}"></li>
+                    <!-- Итерация по задачам и вывод их содержимого -->
+                    <li th:each="task : ${tasks}" th:text="${task.getTaskContent()}"></li>
                 </ul>
-          
+
+                <!-- Информация о невыполненных задачах -->
                 <div class="pending-tasks">
-                  <span>You have <span class="pending-num"> no </span> tasks pending.</span>
+                    <span>You have <span class="pending-num"> no </span> tasks pending.</span>
                 </div>
             </div>
         </div>
-        
     </div>
+
+    <!-- Подключение скрипта JavaScript из файла worker.js -->
     <script src="scripts/worker.js"></script>
 </body>
+
 </html>
