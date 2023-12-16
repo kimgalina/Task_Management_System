@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Получение элементов интерфейса
+  // Get interface elements
   const openModalBtn = document.getElementById("open-modal-btn");
   const closeModalBtn = document.getElementById("close-my-modal-btn");
   const modal = document.getElementById("my-modal");
 
-  // Функции для открытия и закрытия модального окна
+  // Functions for opening and closing the modal window
   function openModal() {
     console.log("Opening modal");
     modal.classList.add("open");
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.classList.remove("open");
   }
 
-  // Обработчики событий для кнопок и модального окна
+  // Event listeners for buttons and modal window
   openModalBtn.addEventListener("click", openModal);
   closeModalBtn.addEventListener("click", closeModal);
 
@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     closeModal();
   });
 
-  // Получение элементов списка задач и ввода новой задачи
+  // Get task list elements and new task input
   const taskList = document.getElementById("taskList");
   const newTaskTextElement = document.getElementById("newTaskText");
 
-  // Функция для создания элемента задачи
+  // Function to create a task element
   function createTaskElement(taskText, isChecked) {
     const taskElement = document.createElement("li");
     taskElement.className = "task";
@@ -46,16 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
     return taskElement;
   }
 
-  // Функция для добавления новой задачи
+  // Function to add a new task
   window.addTask = async function () {
     const newTaskText = newTaskTextElement.value.trim();
     if (newTaskText !== "") {
-      const isChecked = false; // Новая задача всегда не выполнена
+      const isChecked = false; // New tasks are always unchecked
       const taskElement = createTaskElement(newTaskText, isChecked);
       taskList.appendChild(taskElement);
       newTaskTextElement.value = "";
 
-      // Отправка содержимого задачи на сервер
+      // Send task content to the server
       try {
         const currentUrl = window.location.href;
         const newUrl = `${currentUrl}/new-task`;
@@ -63,16 +63,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await fetch(newUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded', // изменено на форму
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: `taskContent=${encodeURIComponent(newTaskText)}`, // изменено на форму
+          body: `taskContent=${encodeURIComponent(newTaskText)}`,
         });
 
         if (response.ok) {
-          // Ваш код обработки успешного ответа (если необходимо)
+          // Your code for handling a successful response (if necessary)
           console.log("OK post");
         } else {
-          // Ваш код обработки ошибки
+          // Your code for handling errors
           console.error('Failed to add task');
         }
       } catch (error) {
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Функция для редактирования задачи
+  // Function to edit a task
   window.editTask = async function (button) {
     const taskElement = button.parentElement;
     const taskText = taskElement.querySelector("span").innerText;
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (newText !== null) {
       taskElement.querySelector("span").innerText = newText;
 
-      // Запрос на сервер для изменения задачи
+      // Server request to edit the task
       try {
         const currentUrl = window.location.href;
 
@@ -106,10 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (response.ok) {
-          // Ваш код для успешного обновления
+          // Your code for a successful update
           console.log("OK patch");
         } else {
-          // Ваш код для обработки ошибок
+          // Your code for handling errors
           console.error('Failed to update task');
         }
       } catch (error) {
@@ -118,13 +118,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Функция для удаления задачи
+  // Function to delete a task
   window.deleteTask = async function (button) {
     const taskElement = button.parentElement;
     const taskText = taskElement.querySelector("span").innerText;
     taskList.removeChild(taskElement);
 
-    // Запрос на сервер для удаления задачи
+    // Server request to delete the task
     try {
       const currentUrl = window.location.href;
 
@@ -136,10 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (response.ok) {
-        // Ваш код для успешного удаления
+        // Your code for a successful deletion
         console.log("OK delete");
       } else {
-        // Ваш код для обработки ошибок
+        // Your code for handling errors
         console.error('Failed to delete task');
       }
     } catch (error) {
@@ -147,9 +147,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Функция для фильтрации задач
+  // Function to filter tasks
   window.filterTasks = async function (filterType) {
-    // Отправка запроса на сервер с параметром filterType
+    // Send a server request with the filterType parameter
     try {
       const currentUrl = window.location.href;
       const filterUrl = `${currentUrl}/filter-tasks?filterType=${filterType}`;
@@ -159,22 +159,22 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (response.ok) {
-        // Получение списка задач с сервера
+        // Get the task list from the server
         const tasks = await response.json();
         console.log(tasks);
-        // Очистка текущего списка задач
+        // Clear the current task list
         taskList.innerHTML = "";
 
-        // Отображение нового списка задач
+        // Display the new task list
         tasks.forEach(task => {
           const taskContent = task.taskContent;
           const isDone = task.done;
 
-          // Используйте значения переменных в вашем коде
+          // Use the variable values in your code
           console.log("Task Content:", taskContent);
           console.log("Is Done:", isDone);
 
-          // Теперь вы можете передать эти значения в вашу функцию createTaskElement
+          // Now you can pass these values to your createTaskElement function
           const taskElement = createTaskElement(taskContent, isDone);
           taskList.appendChild(taskElement);
         });
@@ -189,31 +189,31 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 });
 
-// Функция для перенаправления на страницу входа
+// Function to redirect to the login page
 function redirectToSignIn() {
-  // Получение текущего пути
+  // Get the current path
   var currentPath = window.location.pathname;
   console.log(currentPath);
-  // Добавление "/signup" к текущему пути и переход на уровень вверх (..)
+  // Add "/login" to the current path and go up one level (..)
   var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
   console.log(loginPath);
-  // Перенаправление пользователя
+  // Redirect the user
   window.location.href = loginPath;
 }
 
-// Функция для обновления статуса задачи
+// Function to update task status
 async function updateTaskStatus(checkbox) {
   const isChecked = checkbox.checked;
-  // Получение родительского элемента (li)
+  // Get the parent element (li)
   const listItem = checkbox.parentNode;
 
-  // Нахождение элемента <span> внутри родительского элемента
+  // Find the <span> element inside the parent element
   const taskContentElement = listItem.querySelector('span');
 
-  // Получение текста из элемента <span>
+  // Get the text from the <span> element
   const taskContent = taskContentElement.textContent;
   console.log("task content = " + taskContent);
-  // Запрос на сервер для изменения задачи
+  // Server request to update the task
   try {
     const currentUrl = window.location.href;
 
@@ -230,10 +230,10 @@ async function updateTaskStatus(checkbox) {
     });
 
     if (response.ok) {
-      // Ваш код для успешного обновления
+      // Your code for a successful update
       console.log("OK patch");
     } else {
-      // Ваш код для обработки ошибок
+      // Your code for handling errors
       console.error('Failed to update task');
     }
   } catch (error) {

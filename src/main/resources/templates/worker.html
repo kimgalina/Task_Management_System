@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
-    <!-- Установка кодировки и параметров масштабирования для мобильных устройств -->
+    <!-- Set encoding and viewport parameters for mobile devices -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Подключение стилей и иконок -->
+    <!-- Link to styles and icons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="styles/worker.css">
 </head>
 
 <body>
-    <!-- Основной контейнер страницы -->
+    <!-- Main page container -->
     <div class="container">
 
-        <!-- Навигационное меню -->
+        <!-- Navigation menu -->
         <nav class="nav">
             <ul class="nav-items">
-                <!-- Элементы навигационного меню -->
+                <!-- Navigation menu items -->
                 <li class="nav-item">
                     <div id="open-modal-btn"><span class="white-text">My Information</span></div>
                 </li>
@@ -28,10 +28,10 @@
             </ul>
         </nav>
 
-        <!-- Модальное окно с информацией пользователя -->
+        <!-- Modal window with user information -->
         <div class="modal" id="my-modal">
             <div class="modal__box">
-                <!-- Кнопка закрытия модального окна -->
+                <!-- Button to close the modal window -->
                 <button class="modal__close-btn" id="close-my-modal-btn">
                     <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
@@ -39,15 +39,15 @@
                         <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
                     </svg>
                 </button>
-                <!-- Контент модального окна с информацией пользователя -->
+                <!-- Content of the modal window with user information -->
                 <div class="modal-info">
                     <div class="modal-img">
-                        <!-- Изображение пользователя -->
+                        <!-- User image -->
                         <img src="https://i0.wp.com/www.repol.copl.ulaval.ca/wp-content/uploads/2019/01/default-user-icon.jpg?ssl=1" alt="">
                     </div>
-                    <!-- Информация о пользователе в модальном окне -->
+                    <!-- User information in the modal window -->
                     <div class="modal-personInfo">
-                        <!-- Поля информации с кнопками редактирования -->
+                        <!-- Information fields with edit buttons -->
                         <div class="modal-info-input">
                             <p th:text="${user.getFirstName()}"><span style="font-weight: 600;">Name: </span><span class="text">Qwerty Qwerty</span></p>
                             <button class="edit">&#9998;</button>
@@ -64,42 +64,42 @@
                             <p th:text="${user.getPhoneNumber()}"><span style="font-weight: 600;">Number: </span><span class="text">+996 XXX XXX XXX</span></p>
                             <button class="edit">&#9998;</button>
                         </div>
-                        <!-- Статус пользователя -->
+                        <!-- User status -->
                         <p th:text="${user.getStatus()}"><span style="font-weight: 600;">Status: </span> Worker</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Приветственный заголовок -->
+        <!-- Welcome title -->
         <div class="welcome-title">
             <h1 th:text="${'Welcome back , ' + user.getFirstName()}" >Welcome back, Worker!</h1>
         </div>
 
-        <!-- Центральная часть страницы с карточкой задач -->
+        <!-- Central part of the page with the task card -->
         <div class="todo-card-center">
             <div class="todo-card">
-                <!-- Заголовок секции задач -->
+                <!-- Section title for tasks -->
                 <h1>To Do</h1>
-                <!-- Ввод новой задачи -->
+                <!-- Input for a new task -->
                 <div id="taskInput">
                     <input type="text" id="newTaskText" placeholder="Enter task...">
                     <button id="addTaskButton" onclick="addTask()">Add Task</button>
                 </div>
-                <!-- Опции фильтрации задач -->
+                <!-- Task filtering options -->
                 <div class="filter-options">
                     <button onclick="filterTasks('all')">All Tasks</button>
                     <button onclick="filterTasks('completed')">Completed Tasks</button>
                     <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
-                <!-- Список задач -->
+                <!-- List of tasks -->
                 <ul id="taskList">
                     <li class="task" th:each="task : ${tasks}">
-                        <!-- Чекбокс для отметки выполненных задач -->
+                        <!-- Checkbox to mark completed tasks -->
                         <input type="checkbox" id="taskCheckbox" th:checked="${task.isDone()}" onchange="updateTaskStatus(this)">
-                        <!-- Описание задачи -->
+                        <!-- Task description -->
                         <span th:text="${task.getTaskContent()}"></span>
-                        <!-- Кнопки для редактирования и удаления задачи -->
+                        <!-- Buttons for editing and deleting tasks -->
                         <button onclick="editTask(this)">Edit</button>
                         <button onclick="deleteTask(this)">Delete</button>
                     </li>
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <!-- Подключение скрипта для взаимодействия с задачами -->
+    <!-- Link to the script for interacting with tasks -->
     <script src="scripts/worker.js"></script>
 </body>
 
