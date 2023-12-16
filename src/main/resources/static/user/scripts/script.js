@@ -136,6 +136,46 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error('Error during DELETE request:', error);
     }
   };
+
+  window.filterTasks = async function (filterType) {
+    // Отправляем запрос на сервер с параметром filterType
+    try {
+      const currentUrl = window.location.href;
+      const filterUrl = `${currentUrl}/filter-tasks?filterType=${filterType}`;
+
+      const response = await fetch(filterUrl, {
+        method: 'GET',
+      });
+
+      if (response.ok) {
+        // Получаем список задач с сервера
+        const tasks = await response.json();
+        console.log(tasks);
+        // Очищаем текущий список задач
+        taskList.innerHTML = "";
+
+        // Отображаем новый список задач
+        tasks.forEach(task => {
+          const taskContent = task.taskContent;
+          const isDone = task.done;
+
+          // Используйте значения переменных в вашем коде
+          console.log("Task Content:", taskContent);
+          console.log("Is Done:", isDone);
+
+          // Теперь вы можете передать эти значения в вашу функцию createTaskElement
+          const taskElement = createTaskElement(taskContent, isDone);
+          taskList.appendChild(taskElement);
+        });
+
+        console.log(`Tasks filtered by: ${filterType}`);
+      } else {
+        console.error('Failed to filter tasks');
+      }
+    } catch (error) {
+      console.error('Error during filter request:', error);
+    }
+  };
 });
 
 

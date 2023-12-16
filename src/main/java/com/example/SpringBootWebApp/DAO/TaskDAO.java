@@ -34,13 +34,12 @@ public class TaskDAO {
     public void addTask(Task task) {
         TASK_COUNT++;
         try {
-            String SQL = "INSERT INTO Tasks (id, user_id, task_content, is_done) VALUES (?, ?, ?, ?)";
+            String SQL = "INSERT INTO Tasks (user_id, task_content, is_done) VALUES ( ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, TASK_COUNT);
-            preparedStatement.setInt(2, task.getUserId());
-            preparedStatement.setString(3, task.getTaskContent());
-            preparedStatement.setBoolean(4, task.isDone());
+            preparedStatement.setInt(1, task.getUserId());
+            preparedStatement.setString(2, task.getTaskContent());
+            preparedStatement.setBoolean(3, task.isDone());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -71,6 +70,36 @@ public class TaskDAO {
 
         return usersTask;
     }
+    public List<Task> filterTasks(int userId, String filterType) {
+        List<Task> allUsersTasks = getTasksByUser(userId);
+        switch(filterType) {
+            case "all":
+                return allUsersTasks;
+            case "completed":
+                System.out.println("begin filter by completed");
+                for(int i = 0; i < allUsersTasks.size(); i++) {
+                    if(!allUsersTasks.get(i).isDone()) {
+                        allUsersTasks.remove(i);
+                        i--;
+                    }
+                }
+                return allUsersTasks;
+            case "uncompleted":
+                System.out.println("begin filter by uncompleted");
+                for(int i = 0; i < allUsersTasks.size(); i++) {
+                    if(allUsersTasks.get(i).isDone()) {
+                        allUsersTasks.remove(i);
+                        i--;
+                    }
+                }
+                return allUsersTasks;
+        }
+        System.out.println("FORMAT FILTER IS NOT RECOGNIZED !!!!");
+        return null;
+    }
+
+
+
     public void editTaskContentByUser(int userId, String taskContent, String newTaskContent) {
         try {
             // Подготовка запроса для выборки задач по userId
