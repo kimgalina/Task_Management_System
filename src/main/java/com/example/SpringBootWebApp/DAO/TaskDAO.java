@@ -98,7 +98,26 @@ public class TaskDAO {
         return null;
     }
 
+    public void changeTaskStatus(int userId , String taskContent, boolean isDone) {
+        try {
+            String updateSQL = "UPDATE Tasks SET is_done = ? WHERE user_id = ? AND task_content = ?";
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
+                updateStatement.setBoolean(1,isDone);
+                updateStatement.setInt(2, userId);
+                updateStatement.setString(3,taskContent);
 
+                int rowsAffected = updateStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Статус задачи успешно обновлен");
+                } else {
+                    System.out.println("Статус задачи НЕ ОБНОВЛЕН ERROR");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void editTaskContentByUser(int userId, String taskContent, String newTaskContent) {
         try {

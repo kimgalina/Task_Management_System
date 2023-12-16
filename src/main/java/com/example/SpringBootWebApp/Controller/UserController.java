@@ -88,6 +88,28 @@ public class UserController {
         return "redirect:/registration"; //
     }
 
+    @GetMapping("/assign-task/{userId}/filter-tasks")
+    public ResponseEntity<List<Task>> filterSomeoneTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
+        List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
+        return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
+    }
+
+    @PatchMapping("/user/{userId}/updateTaskStatus")
+    @ResponseBody
+    public ResponseEntity<String> changeMyTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
+                                                     @RequestParam("isDone") boolean isDone) {
+        taskDAO.changeTaskStatus(userId, taskContent, isDone);
+        return ResponseEntity.ok("Changed task Status successfully");
+    }
+
+    @PatchMapping("/assign-task/{userId}/updateTaskStatus")
+    @ResponseBody
+    public ResponseEntity<String> changeSomeoneTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
+                                                     @RequestParam("isDone") boolean isDone) {
+        taskDAO.changeTaskStatus(userId, taskContent, isDone);
+        return ResponseEntity.ok("Changed task Status successfully");
+    }
+
     @GetMapping("/assign-task/{userId}")
     public String showUsersTasks(@PathVariable int userId,Model model) {
         model.addAttribute("user",userDAO.findById(userId));

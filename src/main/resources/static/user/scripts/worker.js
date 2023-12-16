@@ -176,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error during filter request:', error);
         }
     };
+
 });
 
 
@@ -188,6 +189,45 @@ function redirectToSignIn() {
     console.log(loginPath);
     // Перенаправляем пользователя
     window.location.href =loginPath;
+}
+async function updateTaskStatus(checkbox) {
+    const isChecked = checkbox.checked;
+    // Получаем родительский элемент (li)
+    const listItem = checkbox.parentNode;
+
+    // Находим элемент <span> внутри родительского элемента
+    const taskContentElement = listItem.querySelector('span');
+
+    // Получаем текст из элемента <span>
+    const taskContent = taskContentElement.textContent;
+    console.log("task content = " + taskContent);
+    // запрос на сервер для изменения таски
+    try {
+        const currentUrl = window.location.href;
+
+        const updateUrl = `${currentUrl}/updateTaskStatus`;
+        console.log(updateUrl);
+
+        const formData = new FormData();
+        formData.append('taskContent', taskContent);
+        formData.append('isDone', isChecked);
+
+        const response = await fetch(updateUrl, {
+            method: 'PATCH',
+            body: formData,
+        });
+
+        if (response.ok) {
+            // Your code for a successful update
+            console.log("OK patch");
+        } else {
+            // Your code for handling errors
+            console.error('Failed to update task');
+        }
+    } catch (error) {
+        console.error('Error during PATCH request:', error);
+    }
+
 }
 
 
