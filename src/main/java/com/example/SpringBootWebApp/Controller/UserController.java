@@ -65,7 +65,6 @@ public class UserController {
 
     @PostMapping("/user/{userId}/new-task")
     public String createTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
-        // Ваш код обработки данных, например, сохранение задачи в базе данных
         Task task = new Task(taskContent, userId);
         taskDAO.addTask(task);
         // После успешного создания задачи, перенаправляем пользователя на какую-то страницу
