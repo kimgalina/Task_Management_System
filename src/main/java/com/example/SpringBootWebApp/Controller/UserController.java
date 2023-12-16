@@ -1,3 +1,15 @@
+/**
+ * The `UserController` class is a Spring MVC controller responsible for handling
+ * requests related to user management and task assignment in the Spring Boot web application.
+ *
+ * It is annotated with `@Controller` to indicate that this class serves as a
+ * Spring MVC controller. This controller interacts with the `UserDAO` and `TaskDAO`
+ * components to manage user information and tasks.
+ *
+ * @author [Galina Kim]
+ * @version 1.0
+ * @since [16.12.2023]
+ */
 package com.example.SpringBootWebApp.Controller;
 
 import com.example.SpringBootWebApp.DAO.TaskDAO;
@@ -18,12 +30,25 @@ public class UserController {
     private UserDAO userDAO;
     private TaskDAO taskDAO;
 
+    /**
+     * Constructor for UserController.
+     *
+     * @param userDAO The data access object for managing user information.
+     * @param taskDAO The data access object for managing tasks.
+     */
     public UserController(UserDAO userDAO, TaskDAO taskDAO) {
 
         this.userDAO = userDAO;
         this.taskDAO = taskDAO;
     }
 
+    /**
+     * Handles HTTP POST requests to "/create-user" endpoint for user registration.
+     *
+     * @param newUser The user object populated from the registration form.
+     * @param status The status of the user (e.g., worker, manager).
+     * @return A redirect to the user profile page if registration is successful, otherwise to the registration page.
+     */
     @PostMapping("/create-user")
     public String createUser(@ModelAttribute("user") User newUser, @RequestParam("status") String status){
         status = status.toLowerCase();
@@ -36,6 +61,12 @@ public class UserController {
         return "redirect:/registration";
     }
 
+    /**
+     * Handles HTTP POST requests to "/login-user" endpoint for user login.
+     *
+     * @param newUser The user object populated from the login form.
+     * @return A redirect to the user profile page if login is successful, otherwise to the login page.
+     */
     @PostMapping("/login-user")
     public String login(@ModelAttribute("user") User newUser){
         System.out.println("пришедший с формы user " + newUser.getFirstName() + " " + newUser.getPassword());
@@ -45,6 +76,14 @@ public class UserController {
         }
         return "redirect:/login";
     }
+
+    /**
+     * Handles HTTP GET requests to "/user/{id}" endpoint to display user profile.
+     *
+     * @param id The unique identifier of the user.
+     * @param model The `Model` object used to add attributes to the view.
+     * @return The logical view name based on the user's status (e.g., "worker", "manager", "director").
+     */
     @GetMapping("/user/{id}")
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
@@ -64,12 +103,29 @@ public class UserController {
         }
         return null;
     }
+
+
+    /**
+     * Handles HTTP GET requests to "/user/{userId}/filter-tasks" endpoint to filter tasks for a specific user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param filterType The type of filtering to apply to tasks.
+     * @return A ResponseEntity containing a list of filtered tasks and an HTTP status code.
+     */
     @GetMapping("/user/{userId}/filter-tasks")
     public ResponseEntity<List<Task>> filterUserTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
         List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
         return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
     }
 
+
+    /**
+     * Handles HTTP POST requests to "/user/{userId}/new-task" endpoint to create a new task for a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the new task.
+     * @return A redirect to the user profile page after creating the task.
+     */
     @PostMapping("/user/{userId}/new-task")
     public String createTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
         Task task = new Task(taskContent, userId);
@@ -78,6 +134,13 @@ public class UserController {
         return "redirect:/user/" + userId ; //
     }
 
+    /**
+     * Handles HTTP POST requests to "/assign-task/{userId}/new-task" endpoint to create a new task for a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the new task.
+     * @return A redirect to the user profile page after creating the task.
+     */
     @PostMapping("/assign-task/{userId}/new-task")
     public String assignTask(@PathVariable int userId, @RequestParam("taskContent") String taskContent) {
         // Ваш код обработки данных, например, сохранение задачи в базе данных
@@ -87,12 +150,27 @@ public class UserController {
         return "redirect:/registration"; //
     }
 
+    /**
+     * Handles HTTP GET requests to "/assign-task/{userId}/filter-tasks" endpoint to filter tasks for a specific user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param filterType The type of filtering to apply to tasks.
+     * @return A ResponseEntity containing a list of filtered tasks and an HTTP status code.
+     */
     @GetMapping("/assign-task/{userId}/filter-tasks")
     public ResponseEntity<List<Task>> filterSomeoneTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
         List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
         return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
     }
 
+    /**
+     * Handles HTTP PATCH requests to "/user/{userId}/updateTaskStatus" endpoint to change the status of a user's task.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the task.
+     * @param isDone The new status of the task.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @PatchMapping("/user/{userId}/updateTaskStatus")
     @ResponseBody
     public ResponseEntity<String> changeMyTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
@@ -101,6 +179,14 @@ public class UserController {
         return ResponseEntity.ok("Changed task Status successfully");
     }
 
+    /**
+     * Handles HTTP PATCH requests to "/assign-task/{userId}/updateTaskStatus" endpoint to change the status of a user's task.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the task.
+     * @param isDone The new status of the task.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @PatchMapping("/assign-task/{userId}/updateTaskStatus")
     @ResponseBody
     public ResponseEntity<String> changeSomeoneTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
@@ -109,6 +195,13 @@ public class UserController {
         return ResponseEntity.ok("Changed task Status successfully");
     }
 
+    /**
+     * Handles HTTP GET requests to "/assign-task/{userId}" endpoint to display tasks assigned to a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param model The `Model` object used to add attributes to the view.
+     * @return The logical view name for displaying user tasks.
+     */
     @GetMapping("/assign-task/{userId}")
     public String showUsersTasks(@PathVariable int userId,Model model) {
         model.addAttribute("user",userDAO.findById(userId));
@@ -116,6 +209,14 @@ public class UserController {
         return "userTasks";
     }
 
+    /**
+     * Handles HTTP PATCH requests to "/assign-task/{userId}/edit-task" endpoint to edit a task assigned to a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskOldText The old content of the task.
+     * @param taskNewText The new content of the task.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @PatchMapping("/assign-task/{userId}/edit-task")
     @ResponseBody
     public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
@@ -126,6 +227,14 @@ public class UserController {
         return ResponseEntity.ok("Task updated successfully");
     }
 
+    /**
+     * Handles HTTP PATCH requests to "/user/{userId}/edit-task" endpoint to edit a task assigned to a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskOldText The old content of the task.
+     * @param taskNewText The new content of the task.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @PatchMapping("/user/{userId}/edit-task")
     @ResponseBody
     public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
@@ -136,6 +245,13 @@ public class UserController {
         return ResponseEntity.ok("Task updated successfully");
     }
 
+    /**
+     * Handles HTTP DELETE requests to "/user/{userId}/delete-task/{taskContent}" endpoint to delete a user's own task.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the task to be deleted.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @DeleteMapping("/user/{userId}/delete-task/{taskContent}")
     @ResponseBody
     public ResponseEntity<String> deleteUserTaskByUser(@PathVariable int userId, @PathVariable String taskContent) {
@@ -143,6 +259,14 @@ public class UserController {
         taskDAO.deleteUserTask(userId,taskContent);
         return ResponseEntity.ok("Task deleted successfully");
     }
+
+    /**
+     * Handles HTTP DELETE requests to "/assign-task/{userId}/delete-task/{taskContent}" endpoint to delete a task assigned to a user.
+     *
+     * @param userId The unique identifier of the user.
+     * @param taskContent The content of the task to be deleted.
+     * @return A ResponseEntity with a success message and an HTTP status code.
+     */
     @DeleteMapping("/assign-task/{userId}/delete-task/{taskContent}")
     @ResponseBody
     public ResponseEntity<String> deleteUserTaskBySomeone(@PathVariable int userId, @PathVariable String taskContent) {

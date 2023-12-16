@@ -6,6 +6,8 @@
  * This class provides methods for adding, retrieving, and finding users in the database, as well
  * as obtaining lists of workers and managers. Additionally, it includes static initialization to
  * set up the database connection during class loading.
+ *  @author [Isa Kasymbek uulu]
+ *  @version 1.0
  */
 
 package com.example.SpringBootWebApp.DAO;

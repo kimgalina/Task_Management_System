@@ -7,7 +7,7 @@
  * Additionally, it includes static initialization to set up the database connection during class
  * loading.
  *
- * @author [Your Name]
+ * @author [Isa Kasymbek uulu]
  * @version 1.0
  */
 
