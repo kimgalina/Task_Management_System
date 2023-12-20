@@ -1,0 +1,88 @@
+-- Create users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(255),
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    password VARCHAR(255),
+    email VARCHAR(255),
+    phoneNumber VARCHAR(15)
+);
+
+-- Create tasks table
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    taskContent TEXT,
+    isDone BOOLEAN,
+    usersId INTEGER REFERENCES "users"(id)
+);
+
+-- Insert data into users table
+INSERT INTO users (status, firstName, lastName, password, email, phoneNumber)
+VALUES
+    ('director', 'John', 'Doe', 'password123', 'john.doe@example.com', '1234567890'),
+    ('worker', 'Jane', 'Smith', 'pass456', 'jane.smith@example.com', '9876543210'),
+    ('manager', 'Alice', 'Johnson', 'pass789', 'alice.johnson@example.com', '4567890123'),
+    ('worker', 'Bob', 'Johnson', 'secret123', 'bob.johnson@example.com', '7890123456'),
+    ('manager', 'Eve', 'Williams', 'topsecret', 'eve.williams@example.com', '3456789012'),
+    ('worker', 'Charlie', 'Brown', 'brownie456', 'charlie.brown@example.com', '9012345678'),
+    ('worker', 'Olivia', 'Smith', 'olivia123', 'olivia.smith@example.com', '2345678901'),
+    ('manager', 'David', 'Miller', 'miller456', 'david.miller@example.com', '5678901234'),
+    ('worker', 'Sophia', 'Davis', 'sophia789', 'sophia.davis@example.com', '8901234567'),
+    ('worker', 'Michael', 'Wilson', 'wilson123', 'michael.wilson@example.com', '3456789012');
+
+-- Insert data into Task table
+INSERT INTO tasks (taskContent, isDone, usersId)
+VALUES
+    ('Complete task 1', false, 1),
+    ('Finish task 2', true, 2),
+    ('Review task 3', false, 3),
+    ('Submit task 4', true, 4),
+    ('Update task 5', false, 5),
+    ('Verify task 6', true, 6),
+    ('Approve task 7', false, 7),
+    ('Close task 8', true, 8),
+    ('Implement task 9', false, 9),
+    ('Test task 10', true, 10);
+
+-- 1. Select all users:
+
+SELECT * FROM users;
+
+-- 2. Select all tasks with user details:
+
+SELECT tasks.*, users.firstName, users.lastName
+FROM tasks
+JOIN users ON tasks.usersId = users.id;
+
+-- 3. Select incomplete tasks with user details:
+
+SELECT tasks.*, users.firstName, users.lastName
+FROM tasks
+JOIN users ON tasks.usersId = users.id
+WHERE tasks.isDone = false;
+
+-- 4. Update a user's status:
+
+   UPDATE users
+   SET status = 'manager'
+   WHERE id = 3;
+
+
+-- 5. Insert a new user:
+
+   INSERT INTO users (status, firstName, lastName, password, email, phoneNumber)
+   VALUES ('worker', 'New', 'users', 'newpassword', 'new.users@example.com', '1234567890');
+
+
+-- 6. Delete a task:
+
+   DELETE FROM tasks
+   WHERE id = 5;
+
+-- 7. Count the number of completed tasks for each user:
+
+   SELECT users.id, users.firstName, users.lastName, COUNT(tasks.id) AS completedTasks
+   FROM users
+   LEFT JOIN tasks ON users.id = tasks.usersId AND tasks.isDone = true
+   GROUP BY users.id, users.firstName, users.lastName;
