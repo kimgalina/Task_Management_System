@@ -1,8 +1,54 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   // Get interface elements
   const openModalBtn = document.getElementById("open-modal-btn");
   const closeModalBtn = document.getElementById("close-my-modal-btn");
   const modal = document.getElementById("my-modal");
+  // Get task list elements and new task input
+  const taskList = document.getElementById("taskList");
+  const newTaskTextElement = document.getElementById("newTaskText");
+
+  async function loadTasks() {
+    try {
+      const currentUrl = window.location.href;
+      const tasksUrl = `${currentUrl}/get-tasks`;
+
+      const response = await fetch(tasksUrl, {
+        method: 'GET',
+      });
+
+      if (response.ok) {
+        // Получаем задачи с сервера
+        const tasks = await response.json();
+
+        // Очищаем текущий список задач
+        taskList.innerHTML = "";
+
+        // Отображаем новый список задач
+        tasks.forEach(task => {
+          const taskContent = task.taskContent;
+          const isDone = task.done;
+
+          // Используем переменные в вашем коде
+          console.log("Task Content:", taskContent);
+          console.log("Is Done:", isDone);
+
+          // Теперь вы можете передать эти значения в вашу функцию createTaskElement
+          const taskElement = createTaskElement(taskContent, isDone);
+          taskList.appendChild(taskElement);
+        });
+
+        console.log("Tasks loaded from the server");
+      } else {
+        console.error('Failed to load tasks');
+      }
+    } catch (error) {
+      console.error('Error during tasks loading:', error);
+    }
+  }
+
+  // Загружаем задачи с сервера после загрузки страницы
+  await loadTasks();
+
 
   // Functions for opening and closing the modal window
   function openModal() {
@@ -29,9 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
     closeModal();
   });
 
-  // Get task list elements and new task input
-  const taskList = document.getElementById("taskList");
-  const newTaskTextElement = document.getElementById("newTaskText");
 
   // Function to create a task element
   function createTaskElement(taskText, isChecked) {

@@ -93,17 +93,7 @@
                     <button onclick="filterTasks('uncompleted')">Uncompleted Tasks</button>
                 </div>
                 <!-- List of tasks -->
-                <ul id="taskList">
-                    <li class="task" th:each="task : ${tasks}">
-                        <!-- Checkbox to mark completed tasks -->
-                        <input type="checkbox" id="taskCheckbox" th:checked="${task.isDone()}" onchange="updateTaskStatus(this)">
-                        <!-- Task description -->
-                        <span th:text="${task.getTaskContent()}"></span>
-                        <!-- Buttons for editing and deleting tasks -->
-                        <button onclick="editTask(this)">Edit</button>
-                        <button onclick="deleteTask(this)">Delete</button>
-                    </li>
-                </ul>
+                <ul id="taskList"></ul>
             </div>
         </div>
     </div>

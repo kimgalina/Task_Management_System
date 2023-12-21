@@ -88,7 +88,7 @@ public class UserController {
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
         model.addAttribute("user", user);
-        model.addAttribute("tasks",taskDAO.getTasksByUser(id));
+//        model.addAttribute("tasks",taskDAO.getTasksByUser(id));
 
         switch(user.getStatus()) {
             case "worker" :
@@ -102,6 +102,15 @@ public class UserController {
                 return "director";
         }
         return null;
+    }
+
+    @GetMapping("/user/{userId}/get-tasks")
+    @ResponseBody
+    public List<Task> getUserTasks(@PathVariable("userId") int userId) {
+        System.out.println("in /user/{userId}/get-tasks ");
+        List<Task> userTasks = taskDAO.getTasksByUser(userId);
+        // Возвращаем список задач в виде JSON
+        return userTasks;
     }
 
 
