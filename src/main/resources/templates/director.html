@@ -120,16 +120,11 @@
                 </div>
                 <!-- Task list -->
                 <ul id="taskList">
-                    <!-- Each task represented as a list item -->
-                    <li class="task" th:each="task : ${tasks}">
-                        <!-- Checkbox for task completion -->
-                        <input type="checkbox" id="taskCheckbox" th:checked="${task.isDone()}" onchange="updateTaskStatus(this)">
-                        <!-- Task text -->
-                        <span th:text="${task.getTaskContent()}"></span>
-                        <!-- Buttons for editing and deleting tasks -->
-                        <button onclick="editTask(this)">Edit</button>
-                        <button onclick="deleteTask(this)">Delete</button>
-                    </li>
+                    <!-- Loading indicator -->
+                    <div class ="loadingIndicator" style="display: none;">
+                        <!--                        Loading...-->
+                        <img src="infinity.gif" alt="Loading...">
+                    </div>
                 </ul>
             </div>
         </div>
