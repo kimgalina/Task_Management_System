@@ -5,10 +5,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   const modal = document.getElementById("my-modal");
   // Get task list elements and new task input
   const taskList = document.getElementById("taskList");
+  const loadingIndicator = document.getElementById("loadingIndicator");
   const newTaskTextElement = document.getElementById("newTaskText");
 
   async function loadTasks() {
     try {
+      // Simulating a delay of 3 seconds (3000 milliseconds)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
       const currentUrl = window.location.href;
       const tasksUrl = `${currentUrl}/get-tasks`;
 
@@ -19,6 +23,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (response.ok) {
         // Получаем задачи с сервера
         const tasks = await response.json();
+        // Hide loading indicator
+        loadingIndicator.style.display = 'none';
 
         // Очищаем текущий список задач
         taskList.innerHTML = "";
@@ -45,7 +51,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error('Error during tasks loading:', error);
     }
   }
-
+  // Show loading indicator
+  loadingIndicator.style.display = 'block';
   // Загружаем задачи с сервера после загрузки страницы
   await loadTasks();
 
