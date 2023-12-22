@@ -73,6 +73,18 @@ li {
     list-style: none;
     padding: 0;
 }
+.loadingIndicator {
+    display: flex;
+
+    height: 100%; /* Чтобы занять всю высоту родительского контейнера */
+}
+
+.loadingIndicator img {
+    width: 60px;
+    height: 50px;
+    margin-left: 40%;
+    margin-top: 18%;
+}
 
 .task {
     display: flex;

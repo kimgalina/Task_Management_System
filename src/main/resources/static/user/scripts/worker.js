@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     // Obtaining elements of the task list and the new task input field
     const taskList = document.getElementById("taskList");
-    const loadingIndicator = document.getElementById("loadingIndicator");
+    const loadingIndicator = document.querySelector(".loadingIndicator");
     const newTaskTextElement = document.getElementById("newTaskText");
     // Obtaining elements for working with the modal window
     const openModalBtn = document.getElementById("open-modal-btn");

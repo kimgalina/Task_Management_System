@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const modal = document.getElementById("my-modal");
   // Get task list elements and new task input
   const taskList = document.getElementById("taskList");
-  const loadingIndicator = document.getElementById("loadingIndicator");
+  const loadingIndicator = document.querySelector(".loadingIndicator");
   const newTaskTextElement = document.getElementById("newTaskText");
 
   async function loadTasks() {

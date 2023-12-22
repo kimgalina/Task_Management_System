@@ -16,12 +16,19 @@ import com.example.SpringBootWebApp.DAO.TaskDAO;
 import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.Models.Task;
 import com.example.SpringBootWebApp.Models.User;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -77,6 +84,23 @@ public class UserController {
         return "redirect:/login";
     }
 
+
+    @GetMapping("user/infinity.gif")
+    public ResponseEntity<byte[]> getInfinityGif() {
+        // Загружаем ресурс из classpath
+        ClassPathResource resource = new ClassPathResource("static/infinity.gif");
+        try (InputStream inputStream = resource.getInputStream()) {
+            byte[] gifBytes = inputStream.readAllBytes();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_GIF)
+                    .body(gifBytes);
+
+        } catch (IOException ioe) {
+            System.err.println("ERROR WHILE READING FILE WITH GIF");
+            ioe.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     /**
      * Handles HTTP GET requests to "/user/{id}" endpoint to display user profile.
      *
