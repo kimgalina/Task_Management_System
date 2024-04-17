@@ -16,6 +16,7 @@ import com.example.SpringBootWebApp.DAO.TaskDAO;
 import com.example.SpringBootWebApp.DAO.UserDAO;
 import com.example.SpringBootWebApp.Models.Task;
 import com.example.SpringBootWebApp.Models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,8 +44,8 @@ public class UserController {
      * @param userDAO The data access object for managing user information.
      * @param taskDAO The data access object for managing tasks.
      */
+    @Autowired
     public UserController(UserDAO userDAO, TaskDAO taskDAO) {
-
         this.userDAO = userDAO;
         this.taskDAO = taskDAO;
     }
@@ -87,7 +88,6 @@ public class UserController {
 
     @GetMapping("user/infinity.gif")
     public ResponseEntity<byte[]> getInfinityGif() {
-        // Загружаем ресурс из classpath
         ClassPathResource resource = new ClassPathResource("static/infinity.gif");
         try (InputStream inputStream = resource.getInputStream()) {
             byte[] gifBytes = inputStream.readAllBytes();
@@ -112,7 +112,6 @@ public class UserController {
     public String getUserProfile(@PathVariable("id") int id, Model model) {
         User user = userDAO.findById(id);
         model.addAttribute("user", user);
-//        model.addAttribute("tasks",taskDAO.getTasksByUser(id));
 
         switch(user.getStatus()) {
             case "worker" :
@@ -131,7 +130,6 @@ public class UserController {
     @GetMapping("/user/{userId}/get-tasks")
     @ResponseBody
     public List<Task> getUserTasks(@PathVariable("userId") int userId) {
-        System.out.println("in /user/{userId}/get-tasks ");
         List<Task> userTasks = taskDAO.getTasksByUser(userId);
         // Возвращаем список задач в виде JSON
         return userTasks;
@@ -254,7 +252,6 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> editUserTaskBySomeone(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
                                                         @RequestParam("taskNewContent") String taskNewText) {
-        // изменить таску с taskContent = taskText на taskContent = taskNewText
         taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 
         return ResponseEntity.ok("Task updated successfully");
@@ -272,7 +269,6 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> editUserTaskByUser(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
                                                      @RequestParam("taskNewContent") String taskNewText) {
-        // изменить таску с taskContent = taskText на taskContent = taskNewText
         taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
 
         return ResponseEntity.ok("Task updated successfully");

@@ -1,0 +1,11 @@
+server:
+  port:
+    7777
+app:
+  database:
+    url: jdbc:postgresql://localhost:5432/task_management_system_db
+    user: postgres
+    password: postgres
+
+
+

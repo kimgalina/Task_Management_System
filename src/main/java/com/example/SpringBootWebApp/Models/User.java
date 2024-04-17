@@ -171,12 +171,4 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    /**
-     * Retrieves a list of tasks associated with the user from the database.
-     *
-     * @return A list of tasks associated with the user.
-     */
-    public List<Task> getUserTasks() {
-        return TaskDAO.getTasksByUser(id);
-    }
 }

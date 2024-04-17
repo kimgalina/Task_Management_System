@@ -14,7 +14,6 @@
 package com.example.SpringBootWebApp.DAO;
 
 import com.example.SpringBootWebApp.Models.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -24,26 +23,14 @@ import java.util.List;
 @Component
 public class TaskDAO {
 
-    @Autowired
-    private static Connection connection;
+    private final DatabaseManager databaseManager;
+    private final Connection connection;
 
-    /**
-     * Static block to initialize the PostgreSQL JDBC driver and establish a database connection.
-     * It throws a runtime exception if any issues occur during the initialization process.
-     */
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            connection = DatabaseManager.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public TaskDAO(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+        connection = databaseManager.getConnection();
     }
+
 
     /**
      * Adds a new task to the database.
@@ -70,7 +57,7 @@ public class TaskDAO {
      * @param userId The ID of the user.
      * @return A list of tasks associated with the given user.
      */
-    public static List<Task> getTasksByUser(int userId) {
+    public List<Task> getTasksByUser(int userId) {
         List<Task> usersTask = new ArrayList<>();
 
         try {

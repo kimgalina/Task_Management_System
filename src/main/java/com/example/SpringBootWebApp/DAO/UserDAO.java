@@ -22,25 +22,14 @@ import java.util.List;
 @Component
 public class UserDAO {
 
-    private static Connection connection;
+    private final DatabaseManager databaseManager;
+    private final Connection connection;
 
-    /**
-     * Static block to initialize the PostgreSQL JDBC driver and establish a database connection.
-     * It throws a runtime exception if any issues occur during the initialization process.
-     */
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            connection = DatabaseManager.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public UserDAO(DatabaseManager databaseManager) {
+        this.databaseManager = databaseManager;
+        connection = databaseManager.getConnection();
     }
+
 
     /**
      * Adds a new user to the database.
