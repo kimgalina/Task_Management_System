@@ -8,4 +8,13 @@ app:
     password: postgres
 
 
-
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task_management_system_db
+    password: postgres
+    username: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true

@@ -26,14 +26,14 @@
 
             <!-- Input field for user first name -->
             <div class="input-box">
-                <input type="text" placeholder="FirstName" required maxlength="10" autofocus  name="firstName">
+                <input type="text" placeholder="FirstName" required maxlength="10" autofocus  name="firstName" th:value="${user.firstName}">
                 <!-- Font Awesome user icon -->
                 <i class="fa-solid fa-user"></i>
             </div>
 
             <!-- Input field for user last name -->
             <div class="input-box">
-                <input type="text" placeholder="LastName" required maxlength="10" autofocus name="lastName">
+                <input type="text" placeholder="LastName" required maxlength="10" autofocus name="lastName" th:value="${user.lastName}">
                 <!-- Font Awesome user icon -->
                 <i class="fa-solid fa-user"></i>
             </div>
@@ -41,7 +41,7 @@
             <!-- Dropdown for selecting user status -->
             <div class="input-box">
                 <label for="status">Status:</label>
-                <select id="status" name="status" required>
+                <select id="status" name="status" required th:value="${user.getStatus()}">
                     <option value="WORKER">Worker</option>
                     <option value="DIRECTOR">Director</option>
                     <option value="MANAGER">Manager</option>
@@ -50,25 +50,27 @@
 
             <!-- Input field for user email -->
             <div class="input-box">
-                <input type="email" placeholder="Email" required name="email">
+                <input type="email" placeholder="Email" required name="email" th:value="${user.getEmail()}">
                 <!-- Font Awesome envelope icon -->
                 <i class="fa-solid fa-envelope"></i>
             </div>
 
             <!-- Input field for user password -->
             <div class="input-box">
-                 <input type="password" placeholder="Password" required maxlength="8" name="password">
+                 <input type="password" placeholder="Password" required maxlength="8" name="password" th:value="${user.getPassword()}">
                 <!-- Font Awesome lock icon -->
                 <i class="fa-solid fa-lock"></i>
             </div>
 
             <!-- Input field for confirming user password -->
             <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required maxlength="8" name="confirm-password">
+                <input type="password" placeholder="Confirm Password" required maxlength="8" name="confirmPassword" th:value="${user.getConfirmPassword()}"/>
                 <!-- Font Awesome lock icon -->
                 <i class="fa-solid fa-lock"></i>
             </div>
-
+            <div th:if="${errorMessage}" class="error-message">
+                <span th:text="${errorMessage}" style="color: red; margin: auto"></span>
+            </div>
             <!-- Button to submit the form -->
             <button type="submit" class="btn">Sign Up</button>
 
