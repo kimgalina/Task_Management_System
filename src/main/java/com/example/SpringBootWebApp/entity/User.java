@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -17,11 +16,14 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-    private static final int NAME_MAX_LENGTH = 50;
-    private static final int NAME_MIN_LENGTH = 2;
-    private static final int EMAIL_MAX_LENGTH = 30;
-    private static final int PHONE_MAX_LENGTH = 20;
-    private static final int PHONE_MIN_LENGTH = 6;
+    public static final int NAME_MAX_LENGTH = 50;
+    public static final int NAME_MIN_LENGTH = 2;
+    public static final int EMAIL_MAX_LENGTH = 30;
+    public static final int EMAIL_MIN_LENGTH = 8;
+    public static final int PHONE_MAX_LENGTH = 20;
+    public static final int PHONE_MIN_LENGTH = 6;
+    public static final int PASSWORD_MIN_LENGTH = 6;
+
 
 
     @Id

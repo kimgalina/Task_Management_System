@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Function to add a new task
-  window.addTask = async function () {
+  window.addTask = async function (userId) {
     const newTaskText = newTaskTextElement.value.trim();
     if (newTaskText !== "") {
       const isChecked = false; // New tasks are always unchecked
@@ -108,14 +108,18 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Send task content to the server
       try {
         const currentUrl = window.location.href;
-        const newUrl = `${currentUrl}/new-task`;
+        const newUrl = "http://localhost:7777/tasks";
+        const bodyData = JSON.stringify({
+          taskContent: newTaskText,
+          userId: userId
+        });
 
         const response = await fetch(newUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
-          body: `taskContent=${encodeURIComponent(newTaskText)}`,
+          body: bodyData
         });
 
         if (response.ok) {

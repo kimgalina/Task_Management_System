@@ -19,18 +19,56 @@
 package com.example.SpringBootWebApp.Controller;
 
 import com.example.SpringBootWebApp.entity.User;
+import com.example.SpringBootWebApp.model.UserSignIn;
+import com.example.SpringBootWebApp.repository.UserRepository;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
+@RequestMapping("/login")
 public class LoginController {
 
-
-    @GetMapping("/login")
-    public String registerUser(Model model) {
-        model.addAttribute("user",new User());
+    private final UserRepository userRepository;
+    @GetMapping
+    public String login(Model model) {
+        model.addAttribute("user",new UserSignIn());
         return "signin";
     }
+
+    @PostMapping
+    public String login(@ModelAttribute("user") @Valid UserSignIn user, BindingResult bindingResult, Model model) {
+        List<String> errorsMsg = new ArrayList<>();
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for(ObjectError error: errors) {
+                errorsMsg.add(error.getDefaultMessage());
+            }
+            model.addAttribute("errors", errorsMsg);
+            return "signin";
+        }
+
+        Optional<User> existedUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        if(existedUser.isPresent()) {
+            return "redirect:/users/" + existedUser.get().getId();
+        }
+        model.addAttribute("user", user);
+        errorsMsg.add("Неправильный email или пароль");
+        model.addAttribute("errors", errorsMsg);
+        return "signin";
+    }
+
+
 
 }
