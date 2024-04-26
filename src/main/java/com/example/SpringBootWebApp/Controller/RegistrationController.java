@@ -18,19 +18,54 @@
  * @since [16.12.2023]
  */package com.example.SpringBootWebApp.Controller;
 
-import com.example.SpringBootWebApp.entity.User;
 import com.example.SpringBootWebApp.model.UserCreate;
+import com.example.SpringBootWebApp.service.UserService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@RequestMapping("/registration")
+@AllArgsConstructor
 public class RegistrationController {
+    private final UserService userService;
 
-    @GetMapping("/registration")
-    public String registerUser(Model model) {
+    @GetMapping()
+    public String getRegistrationForm(Model model) {
         model.addAttribute("user",new UserCreate());
         return "signup";
+    }
+
+    @PostMapping
+    public String register(@ModelAttribute("user") @Valid UserCreate newUser,
+                           BindingResult bindingResult,
+                           Model model) {
+        System.out.println("в контроллере ");
+        List<String> errorsMsg = new ArrayList<>();
+        if(bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for(ObjectError error: errors) {
+                errorsMsg.add(error.getDefaultMessage());
+            }
+            model.addAttribute("errors", errorsMsg);
+            return "signup";
+        }
+        Long createdUserId = userService.createUser(newUser, errorsMsg);
+        if(createdUserId == null && !errorsMsg.isEmpty()) {
+            model.addAttribute("errors", errorsMsg);
+            return "signup";
+        }
+        return "redirect:/users/" + createdUserId;
     }
 
 }
