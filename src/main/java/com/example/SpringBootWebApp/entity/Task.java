@@ -11,11 +11,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Table(name = "tasks")
 public class Task {
     @Id
@@ -25,11 +27,13 @@ public class Task {
     @Column(name = "content", nullable = false)
     private String taskContent;
 
-    private boolean isDone;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
+
 
 
 }

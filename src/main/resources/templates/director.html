@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Meta tags for character set and viewport settings -->
@@ -85,7 +85,7 @@
                 <!-- Workers list -->
                 <li th:each="worker : ${workers}" class="open-todo-btn">
                     <!-- Link to the worker's task page -->
-                    <a th:href="@{'/assign-task/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
+                    <a th:href="@{'/tasks/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
                 </li>
             </div>
             
@@ -95,7 +95,7 @@
                 <!-- Managers list -->
                 <li th:each="manager : ${managers}" class="open-todo-btn">
                     <!-- Link to the manager's task page -->
-                    <a th:href="@{'/assign-task/' + ${manager.getId()}}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}">User</a>
+                    <a th:href="@{'/tasks/' + ${manager.getId()}}" th:text="${manager.getFirstName() + ' ' + manager.getLastName()}">User</a>
                 </li>
             </div>
 
@@ -105,7 +105,7 @@
                 <!-- Form to add a new task -->
                 <div id="taskInput">
                     <input type="text" id="newTaskText" placeholder="Enter task...">
-                    <button id="addTaskButton" onclick="addTask()">Add Task</button>
+                    <button id="addTaskButton" th:onclick="'addTask(' + ${user.id} + ')'" >Add Task</button>
                 </div>
                 <!-- Task filter buttons -->
                 <div class="filter-options">

@@ -119,14 +119,6 @@ public class UserController {
     }
 
 
-//    @GetMapping("/{id}/tasks")
-//    @ResponseBody
-//    public List<Task> getUserTasks(@PathVariable("userId") int userId) {
-//        List<Task> userTasks = taskDAO.getTasksByUser(userId);
-//        // Возвращаем список задач в виде JSON
-//        return userTasks;
-//    }
-
 
 //    @GetMapping("/{id}/tasks/filter")
 //    public ResponseEntity<List<Task>> filterUserTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
