@@ -118,11 +118,4 @@ public class UserController {
         return null;
     }
 
-
-
-//    @GetMapping("/{id}/tasks/filter")
-//    public ResponseEntity<List<Task>> filterUserTasks(@PathVariable("userId") int userId, @RequestParam("filterType") String filterType) {
-//        List<Task> filteredTasks = taskDAO.filterTasks(userId, filterType);
-//        return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
-//    }
 }

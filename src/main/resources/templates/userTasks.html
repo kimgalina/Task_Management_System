@@ -140,7 +140,7 @@
             </div>
             <ul id="taskList">
                 <li class="task" th:each="task : ${user.getTasks()}">
-                    <input type="checkbox" id="taskCheckbox" th:checked="${task.isDone()}" onchange="updateTaskStatus(this)">
+                    <input type="checkbox" id="taskCheckbox" th:checked="${task.getIsDone()}" onchange="updateTaskStatus(this)">
                     <span th:text="${task.getTaskContent()}"></span>
                     <button onclick="editTask(this)">Edit</button>
                     <button onclick="deleteTask(this)">Delete</button>
@@ -277,7 +277,7 @@
                 // Отправляем запрос на сервер с параметром filterType
                 try {
                     const currentUrl = window.location.href;
-                    const filterUrl = `${currentUrl}/filter-tasks?filterType=${filterType}`;
+                    const filterUrl = `${currentUrl}/filter?filterType=${filterType}`;
 
                     const response = await fetch(filterUrl, {
                         method: 'GET',

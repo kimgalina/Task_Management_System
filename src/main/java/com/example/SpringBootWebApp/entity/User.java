@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -15,7 +17,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     public static final int NAME_MAX_LENGTH = 50;
     public static final int NAME_MIN_LENGTH = 2;
     public static final int EMAIL_MAX_LENGTH = 30;
@@ -48,6 +50,5 @@ public class User {
 
     @OneToMany(mappedBy = "owner")
     private Set<Task> tasks;
-
 
 }

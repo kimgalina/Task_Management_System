@@ -1,6 +1,7 @@
 package com.example.SpringBootWebApp.Controller;
 
 
+import com.example.SpringBootWebApp.DTO.TaskDTO;
 import com.example.SpringBootWebApp.entity.Task;
 import com.example.SpringBootWebApp.entity.User;
 import com.example.SpringBootWebApp.model.TaskCreate;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/tasks")
@@ -37,11 +39,25 @@ public class TaskController {
         if(userEntity.isEmpty()) {
             return "user-not-found";
         }
-        System.out.println(userEntity.get().getTasks());
         model.addAttribute("user", userEntity.get());
         return "userTasks";
     }
 
+
+    @GetMapping("/{userId}/filter")
+    @ResponseBody
+    public ResponseEntity<Set<TaskDTO>> filterUserTasks(@PathVariable("userId") Long userId,
+                                                        @RequestParam("filterType") String filterType) {
+        Optional<User> userEntity = userRepository.findById(userId);
+        if(userEntity.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        Set<TaskDTO> filteredTasks = taskService.filterTasks(userEntity.get(), filterType);
+        if(filteredTasks != null) {
+            return new ResponseEntity<>(filteredTasks, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
 
     @PostMapping("/{userId}/assign-task")
     @ResponseBody
