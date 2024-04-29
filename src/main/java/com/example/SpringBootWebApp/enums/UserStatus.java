@@ -1,5 +1,5 @@
 package com.example.SpringBootWebApp.enums;
 
 public enum UserStatus {
-    WORKER, MANAGER, DIRECTOR
+    ROLE_WORKER, ROLE_MANAGER, ROLE_DIRECTOR
 }

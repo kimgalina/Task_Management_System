@@ -140,7 +140,7 @@
             </div>
             <ul id="taskList">
                 <li class="task" th:each="task : ${user.getTasks()}">
-                    <input type="checkbox" id="taskCheckbox" th:checked="${task.getIsDone()}" onchange="updateTaskStatus(this)">
+                    <input type="checkbox" th:id="${task.getId()}" th:checked="${task.getIsDone()}" onchange="updateTaskStatus(this)">
                     <span th:text="${task.getTaskContent()}"></span>
                     <button onclick="editTask(this)">Edit</button>
                     <button onclick="deleteTask(this)">Delete</button>
@@ -290,16 +290,9 @@
                         // Очищаем текущий список задач
                         taskList.innerHTML = "";
 
-                        // Отображаем новый список задач
                         tasks.forEach(task => {
                             const taskContent = task.taskContent;
                             const isDone = task.done;
-
-                            // Используйте значения переменных в вашем коде
-                            console.log("Task Content:", taskContent);
-                            console.log("Is Done:", isDone);
-
-                            // Теперь вы можете передать эти значения в вашу функцию createTaskElement
                             const taskElement = createTaskElement(taskContent, isDone);
                             taskList.appendChild(taskElement);
                         });
@@ -317,36 +310,20 @@
         });
         async function updateTaskStatus(checkbox) {
             const isChecked = checkbox.checked;
-            // Получаем родительский элемент (li)
-            const listItem = checkbox.parentNode;
-
-            // Находим элемент <span> внутри родительского элемента
-            const taskContentElement = listItem.querySelector('span');
-
-            // Получаем текст из элемента <span>
-            const taskContent = taskContentElement.textContent;
-            console.log("task content = " + taskContent);
-            // запрос на сервер для изменения таски
+            const taskId = checkbox.id;
+            console.log("task id = " + taskId);
             try {
-                const currentUrl = window.location.href;
-
-                const updateUrl = `${currentUrl}/updateTaskStatus`;
-                console.log(updateUrl);
-
+                const updateUrl = "/tasks/" + taskId + "/status";
                 const formData = new FormData();
-                formData.append('taskContent', taskContent);
                 formData.append('isDone', isChecked);
 
                 const response = await fetch(updateUrl, {
                     method: 'PATCH',
                     body: formData,
                 });
-
                 if (response.ok) {
-                    // Your code for a successful update
                     console.log("OK patch");
                 } else {
-                    // Your code for handling errors
                     console.error('Failed to update task');
                 }
             } catch (error) {

@@ -2,6 +2,7 @@ package com.example.SpringBootWebApp.Controller;
 
 
 import com.example.SpringBootWebApp.DTO.TaskDTO;
+import com.example.SpringBootWebApp.DTO.TaskUpdateDTO;
 import com.example.SpringBootWebApp.entity.Task;
 import com.example.SpringBootWebApp.entity.User;
 import com.example.SpringBootWebApp.model.TaskCreate;
@@ -34,7 +35,7 @@ public class TaskController {
     private final UserRepository userRepository;
 
     @GetMapping("/{userId}")
-    public String getUserTasks(@PathVariable("userId") Long userId, Model model) {
+    public String getUserTasksPage(@PathVariable("userId") Long userId, Model model) {
         Optional<User> userEntity = userRepository.findById(userId);
         if(userEntity.isEmpty()) {
             return "user-not-found";
@@ -43,6 +44,16 @@ public class TaskController {
         return "userTasks";
     }
 
+    @GetMapping("/{userId}/get-tasks")
+    @ResponseBody
+    public ResponseEntity<List<Task>> getUserTasks(@PathVariable("userId") Long userId) {
+        Optional<User> userEntity = userRepository.findById(userId);
+        if(userEntity.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        List<Task> usersTask = taskRepository.findByOwner(userEntity.get());
+        return new ResponseEntity<>(usersTask, HttpStatus.OK);
+    }
 
     @GetMapping("/{userId}/filter")
     @ResponseBody
@@ -89,31 +100,30 @@ public class TaskController {
 
     @PatchMapping("/{taskId}/status")
     @ResponseBody
-    public ResponseEntity<String> changeTaskStatus(@PathVariable("userId") int userId, @RequestParam("taskContent") String  taskContent,
-                                                     @RequestParam("isDone") boolean isDone) {
-//        taskDAO.changeTaskStatus(userId, taskContent, isDone);
-        return ResponseEntity.ok("Changed task Status successfully");
+    public ResponseEntity<Void> changeTaskStatus(@PathVariable("taskId") Long taskId,
+                                                   @RequestParam("isDone") Boolean isDone) {
+        return taskService.changeStatus(taskId, isDone);
     }
 
 
 
 
-    @PutMapping("/taskId")
+    @PutMapping("/{taskId}")
     @ResponseBody
-    public ResponseEntity<String> editTask(@PathVariable int userId, @RequestParam("taskOldContent") String taskOldText,
-                                                        @RequestParam("taskNewContent") String taskNewText) {
-//        taskDAO.editTaskContentByUser(userId, taskOldText, taskNewText);
+    public ResponseEntity<String> editTask(@PathVariable("taskId") Long taskId,
+                                           @RequestBody @Valid TaskUpdateDTO updatedTask) {
 
+        System.out.println("Изменяем содержимое задачи");
         return ResponseEntity.ok("Task updated successfully");
     }
 
 
-    @DeleteMapping("/taskId")
+    @DeleteMapping("/{taskId}")
     @ResponseBody
-    public ResponseEntity<String> deleteTask(@PathVariable int userId, @PathVariable String taskContent) {
+    public ResponseEntity<String> deleteTask(@PathVariable("taskId") Long taskId) {
 
-//        taskDAO.deleteUserTask(userId,taskContent);
-        return ResponseEntity.ok("Task deleted successfully");
+        System.out.println("Удалили таску с id = " + taskId);
+        return new ResponseEntity<>("Task deleted successfully", HttpStatus.NO_CONTENT);
     }
 
 }

@@ -21,5 +21,10 @@ spring:
 
   output:
     ansi:
-      enabled=ALWAYS:
+      enabled: ALWAYS
 
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE

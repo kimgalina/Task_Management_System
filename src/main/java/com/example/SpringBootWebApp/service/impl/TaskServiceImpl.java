@@ -8,9 +8,12 @@ import com.example.SpringBootWebApp.repository.TaskRepository;
 import com.example.SpringBootWebApp.service.TaskService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -31,5 +34,15 @@ public class TaskServiceImpl implements TaskService {
                 return taskMapper.toSetDTO(taskRepository.findByOwnerAndIsDone(user, false));
         }
         return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> changeStatus(Long taskId, Boolean status) {
+        Optional<Task> task =  taskRepository.findById(taskId);
+        if(task.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        task.get().setIsDone(status);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

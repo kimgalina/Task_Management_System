@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Meta tags for character set and viewport settings -->
@@ -81,7 +81,7 @@
                 <ul class="todo-card-workers">
                     <li th:each="worker : ${workers}" class="open-todo-btn">
                         <!-- Link to the worker's task page -->
-                        <a th:href="@{'/assign-task/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
+                        <a th:href="@{'/tasks/' + ${worker.getId()}}" th:text="${worker.getFirstName() + ' ' + worker.getLastName()}">User</a>
                     </li>
                 </ul>
             </div>

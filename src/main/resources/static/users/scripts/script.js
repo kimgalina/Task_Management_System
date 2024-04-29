@@ -5,40 +5,28 @@ document.addEventListener("DOMContentLoaded", async function () {
   const modal = document.getElementById("my-modal");
   // Get task list elements and new task input
   const taskList = document.getElementById("taskList");
-  const loadingIndicator = document.querySelector(".loadingIndicator");
   const newTaskTextElement = document.getElementById("newTaskText");
+  const currentUserId;
 
   async function loadTasks() {
+    console.log("loading tasks");
     try {
-      // Simulating a delay of 3 seconds (3000 milliseconds)
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      const pathParts = window.location.pathname.split('/');
+      currentUserId = pathParts[pathParts.indexOf('users') + 1];
 
-      const currentUrl = window.location.href;
-      const tasksUrl = `${currentUrl}/get-tasks`;
-
-      const response = await fetch(tasksUrl, {
+      console.log("CURRENT USER ID " + currentUserId);
+      const response = await fetch("/tasks/" + currentUserId + "/get-tasks", {
         method: 'GET',
       });
 
       if (response.ok) {
-        // Получаем задачи с сервера
         const tasks = await response.json();
-        // Hide loading indicator
         loadingIndicator.style.display = 'none';
-
-        // Очищаем текущий список задач
         taskList.innerHTML = "";
-
-        // Отображаем новый список задач
         tasks.forEach(task => {
           const taskContent = task.taskContent;
           const isDone = task.done;
 
-          // Используем переменные в вашем коде
-          console.log("Task Content:", taskContent);
-          console.log("Is Done:", isDone);
-
-          // Теперь вы можете передать эти значения в вашу функцию createTaskElement
           const taskElement = createTaskElement(taskContent, isDone);
           taskList.appendChild(taskElement);
         });
@@ -51,13 +39,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error('Error during tasks loading:', error);
     }
   }
-  // Show loading indicator
-  loadingIndicator.style.display = 'block';
-  // Загружаем задачи с сервера после загрузки страницы
+
   await loadTasks();
 
 
-  // Functions for opening and closing the modal window
   function openModal() {
     console.log("Opening modal");
     modal.classList.add("open");
@@ -203,43 +188,44 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Function to filter tasks
   window.filterTasks = async function (filterType) {
-    // Send a server request with the filterType parameter
-    try {
-      const currentUrl = window.location.href;
-      const filterUrl = `${currentUrl}/filter-tasks?filterType=${filterType}`;
-
-      const response = await fetch(filterUrl, {
-        method: 'GET',
-      });
-
-      if (response.ok) {
-        // Get the task list from the server
-        const tasks = await response.json();
-        console.log(tasks);
-        // Clear the current task list
-        taskList.innerHTML = "";
-
-        // Display the new task list
-        tasks.forEach(task => {
-          const taskContent = task.taskContent;
-          const isDone = task.done;
-
-          // Use the variable values in your code
-          console.log("Task Content:", taskContent);
-          console.log("Is Done:", isDone);
-
-          // Now you can pass these values to your createTaskElement function
-          const taskElement = createTaskElement(taskContent, isDone);
-          taskList.appendChild(taskElement);
-        });
-
-        console.log(`Tasks filtered by: ${filterType}`);
-      } else {
-        console.error('Failed to filter tasks');
-      }
-    } catch (error) {
-      console.error('Error during filter request:', error);
-    }
+    console.log("CURRENT USER " + currentUserId);
+    console.log("Filter type " + filterType);
+//    try {
+//      const currentUrl = window.location.href;
+//      const filterUrl = "/tasks/" + userId + `/filter?filterType=${filterType}`;
+//
+//      const response = await fetch(filterUrl, {
+//        method: 'GET',
+//      });
+//
+//      if (response.ok) {
+//        // Get the task list from the server
+//        const tasks = await response.json();
+//        console.log(tasks);
+//        // Clear the current task list
+//        taskList.innerHTML = "";
+//
+//        // Display the new task list
+//        tasks.forEach(task => {
+//          const taskContent = task.taskContent;
+//          const isDone = task.done;
+//
+//          // Use the variable values in your code
+//          console.log("Task Content:", taskContent);
+//          console.log("Is Done:", isDone);
+//
+//          // Now you can pass these values to your createTaskElement function
+//          const taskElement = createTaskElement(taskContent, isDone);
+//          taskList.appendChild(taskElement);
+//        });
+//
+//        console.log(`Tasks filtered by: ${filterType}`);
+//      } else {
+//        console.error('Failed to filter tasks');
+//      }
+//    } catch (error) {
+//      console.error('Error during filter request:', error);
+//    }
   };
 });
 

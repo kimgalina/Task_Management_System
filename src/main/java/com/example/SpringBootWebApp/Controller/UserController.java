@@ -11,13 +11,9 @@
  */
 package com.example.SpringBootWebApp.Controller;
 
-import com.example.SpringBootWebApp.entity.Task;
 import com.example.SpringBootWebApp.entity.User;
 import com.example.SpringBootWebApp.enums.UserStatus;
 import com.example.SpringBootWebApp.exception.NotFoundException;
-import com.example.SpringBootWebApp.exception.PasswordException;
-import com.example.SpringBootWebApp.model.UserCreate;
-import com.example.SpringBootWebApp.model.UserSignIn;
 import com.example.SpringBootWebApp.model.UserUpdate;
 import com.example.SpringBootWebApp.repository.UserRepository;
 import com.example.SpringBootWebApp.service.UserService;
@@ -25,7 +21,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +31,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -70,14 +64,14 @@ public class UserController {
         model.addAttribute("user", user);
 
         switch(user.getStatus()) {
-            case WORKER:
+            case ROLE_WORKER:WORKER:
                 return "worker";
-            case MANAGER:
-                model.addAttribute("workers", userRepository.findByStatus(UserStatus.WORKER));
+            case ROLE_MANAGER:MANAGER:
+                model.addAttribute("workers", userRepository.findByStatus(UserStatus.ROLE_WORKER));
                 return "manager";
-            case DIRECTOR:
-                model.addAttribute("workers", userRepository.findByStatus(UserStatus.WORKER));
-                model.addAttribute("managers", userRepository.findByStatus(UserStatus.MANAGER));
+            case ROLE_DIRECTOR:
+                model.addAttribute("workers", userRepository.findByStatus(UserStatus.ROLE_WORKER));
+                model.addAttribute("managers", userRepository.findByStatus(UserStatus.ROLE_MANAGER));
                 return "director";
         }
         return null;
