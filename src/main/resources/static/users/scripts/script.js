@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Get task list elements and new task input
   const taskList = document.getElementById("taskList");
   const newTaskTextElement = document.getElementById("newTaskText");
-  const currentUserId;
+  var currentUserId;
 
   async function loadTasks() {
     console.log("loading tasks");
@@ -231,14 +231,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 // Function to redirect to the login page
 function redirectToSignIn() {
-  // Get the current path
-  var currentPath = window.location.pathname;
-  console.log(currentPath);
-  // Add "/login" to the current path and go up one level (..)
-  var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
-  console.log(loginPath);
-  // Redirect the user
-  window.location.href = loginPath;
+  // // Get the current path
+  // var currentPath = window.location.pathname;
+  // console.log(currentPath);
+  // // Add "/login" to the current path and go up one level (..)
+  // var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
+  // console.log(loginPath);
+  // // Redirect the user
+  window.location.href = "/logout";
 }
 
 // Function to update task status

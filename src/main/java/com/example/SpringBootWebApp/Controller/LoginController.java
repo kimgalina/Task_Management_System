@@ -48,28 +48,6 @@ public class LoginController {
         return "signin";
     }
 
-    @PostMapping
-    public String login(@ModelAttribute("user") @Valid UserSignIn user, BindingResult bindingResult, Model model) {
-        List<String> errorsMsg = new ArrayList<>();
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for(ObjectError error: errors) {
-                errorsMsg.add(error.getDefaultMessage());
-            }
-            model.addAttribute("errors", errorsMsg);
-            return "signin";
-        }
-
-        Optional<User> existedUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
-        if(existedUser.isPresent()) {
-            return "redirect:/users/" + existedUser.get().getId();
-        }
-        model.addAttribute("user", user);
-        errorsMsg.add("Неправильный email или пароль");
-        model.addAttribute("errors", errorsMsg);
-        return "signin";
-    }
-
-
-
+    // при выполнении POST запроса spring security сам перехватит этот запрос
+    // и будет использовать UserDetailsService для поиска UserDetails то есть User с такиими данными  с формы
 }

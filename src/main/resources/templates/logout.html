@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(https://static.vecteezy.com/system/resources/previews/023/407/402/non_2x/space-abstract-background-in-the-style-of-fantasy-illustration-violet-and-blue-colored-cartoon-style-felicia-simion-alien-worlds-paul-pelletier-generat-ai-free-photo.jpg);
+            text-align: center;
+            margin: 100px;
+
+        }
+        .wrapper {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1 {
+            color: #f1eeee;
+        }
+        .logout-form {
+            display: inline-block;
+        }
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h1>Точно хотите выйти?</h1>
+    <form class="logout-form" action="/logout" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button class="logout-btn" type="submit">Выйти</button>
+    </form>
+</div>
+</body>
+</html>

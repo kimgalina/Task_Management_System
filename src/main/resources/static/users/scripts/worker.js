@@ -224,13 +224,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 // Function to redirect to the login page
 function redirectToSignIn() {
     // Getting the current path
-    var currentPath = window.location.pathname;
-    console.log(currentPath);
-    // Adding "/login" to the current path and going up one level (..)
-    var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
-    console.log(loginPath);
-    // Redirecting the user
-    window.location.href = loginPath;
+    // var currentPath = window.location.pathname;
+    // console.log(currentPath);
+    // // Adding "/login" to the current path and going up one level (..)
+    // var loginPath = currentPath.replace(/\/user\/\d+/, "/login");
+    // console.log(loginPath);
+    // // Redirecting the user
+    window.location.href = "/logout";
 }
 
 // Function to update the task status
